@@ -14,10 +14,11 @@ public class CountryDAO implements ICountryDAO {
     @Override
     public Country getCountryById(int id) {
         Connection connection = ConnectionUtil.getConnection();
-        try{
+        try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Country WHERE id=" + id);
-            if(resultSet.next()){
+            if (resultSet.next()) {
+                System.out.println(getCountryById(resultSet));
                 return getCountryById(resultSet);
             }
         } catch (SQLException e) {
@@ -43,7 +44,7 @@ public class CountryDAO implements ICountryDAO {
             while (resultSet.next()) {
                 countries.add(getCountryById(resultSet));
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return countries;
@@ -55,7 +56,7 @@ public class CountryDAO implements ICountryDAO {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Country VALUE(default, ?)");
             preparedStatement.setString(1, country);
-            if(preparedStatement.executeUpdate() == 1){
+            if (preparedStatement.executeUpdate() == 1) {
                 System.out.println("Insertion is successful.");
             } else
                 System.out.println("Insertion was failed.");
@@ -71,7 +72,7 @@ public class CountryDAO implements ICountryDAO {
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Country SET country=? WHERE id=?");
             preparedStatement.setString(1, country.getCountry());
             preparedStatement.setInt(2, country.getId());
-            if(preparedStatement.executeUpdate() == 1){
+            if (preparedStatement.executeUpdate() == 1) {
                 System.out.println("Update process is successful: " + country.getId() + "-" + country.getCountry());
             } else
                 System.out.println("Update process was failed: " + country.getId() + "-" + country.getCountry());
@@ -85,7 +86,7 @@ public class CountryDAO implements ICountryDAO {
         Connection connection = ConnectionUtil.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Country WHERE id=" + id);
-            if(preparedStatement.executeUpdate() == 1){
+            if (preparedStatement.executeUpdate() == 1) {
                 System.out.println("Delete process is successful.");
             } else
                 System.out.println("Delete process was failed.");
