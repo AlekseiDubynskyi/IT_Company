@@ -12,7 +12,7 @@ public interface IEmployeesDAO {
 
     List<Employees> getAllEmployees();
 
-    void addEmployee(int id, String first_name, String last_name, Positions positions, Employee_contacts employee_contacts, Teams teams);
+    void addEmployee(int id, String first_name, String last_name, int position_id, int contact_id, int team_id);
 
     void updateEmployee(Employees employees);
 

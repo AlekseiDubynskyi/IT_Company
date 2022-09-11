@@ -4,20 +4,20 @@ public class Employees {
     private int id;
     private String first_name;
     private String last_name;
-    private Positions positions;
-    private Employee_contacts employee_contacts;
-    private Teams teams;
+    private int position_id;
+    private int contact_id;
+    private int team_id;
 
     public Employees() {
     }
 
-    public Employees(int id, String first_name, String last_name, Positions positions, Employee_contacts employee_contacts, Teams teams) {
+    public Employees(int id, String first_name, String last_name, int position_id, int contact_id, int team_id) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
-        this.positions = positions;
-        this.employee_contacts = employee_contacts;
-        this.teams = teams;
+        this.position_id = position_id;
+        this.contact_id = contact_id;
+        this.team_id = team_id;
     }
 
     public int getId() {
@@ -44,28 +44,28 @@ public class Employees {
         this.last_name = last_name;
     }
 
-    public Positions getPositions() {
-        return positions;
+    public int getPosition_id() {
+        return position_id;
     }
 
-    public void setPositions(Positions positions) {
-        this.positions = positions;
+    public void setPosition_id(int position_id) {
+        this.position_id = position_id;
     }
 
-    public Employee_contacts getEmployee_contacts() {
-        return employee_contacts;
+    public int getContact_id() {
+        return contact_id;
     }
 
-    public void setEmployee_contacts(Employee_contacts employee_contacts) {
-        this.employee_contacts = employee_contacts;
+    public void setContact_id(int contact_id) {
+        this.contact_id = contact_id;
     }
 
-    public Teams getTeams() {
-        return teams;
+    public int getTeam_id() {
+        return team_id;
     }
 
-    public void setTeams(Teams teams) {
-        this.teams = teams;
+    public void setTeam_id(int team_id) {
+        this.team_id = team_id;
     }
 
     @Override
@@ -74,9 +74,9 @@ public class Employees {
                 "id=" + id +
                 ", first_name='" + first_name + '\'' +
                 ", last_name='" + last_name + '\'' +
-                ", positions=" + positions +
-                ", employee_contacts=" + employee_contacts +
-                ", teams=" + teams +
+                ", position_id=" + position_id +
+                ", contact_id=" + contact_id +
+                ", team_id=" + team_id +
                 '}';
     }
 }

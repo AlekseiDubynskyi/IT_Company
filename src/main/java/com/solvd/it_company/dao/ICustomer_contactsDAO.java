@@ -10,7 +10,7 @@ public interface ICustomer_contactsDAO {
 
     List<Customer_contacts> getAllCustomer_contacts();
 
-    void addCustomer_contact(int id, String responsible_person_name, String phone_number, String email, Addresses addresses);
+    void addCustomer_contact(int id, String responsible_person_name, String phone_number, String email, int address_id);
 
     void updateCustomer_contact(Customer_contacts customer_contacts);
 

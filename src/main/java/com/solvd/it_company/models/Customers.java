@@ -3,17 +3,17 @@ package com.solvd.it_company.models;
 public class Customers {
     private int id;
     private String customer_name;
-    private Customer_types customer_types;
-    private Customer_contacts customer_contacts;
+    private int customer_type_id;
+    private int customer_contact_id;
 
     public Customers() {
     }
 
-    public Customers(int id, String customer_name, Customer_types customer_types, Customer_contacts customer_contacts) {
+    public Customers(int id, String customer_name, int customer_type_id, int customer_contact_id) {
         this.id = id;
         this.customer_name = customer_name;
-        this.customer_types = customer_types;
-        this.customer_contacts = customer_contacts;
+        this.customer_type_id = customer_type_id;
+        this.customer_contact_id = customer_contact_id;
     }
 
     public int getId() {
@@ -32,20 +32,20 @@ public class Customers {
         this.customer_name = customer_name;
     }
 
-    public Customer_types getCustomer_types() {
-        return customer_types;
+    public int getCustomer_type_id() {
+        return customer_type_id;
     }
 
-    public void setCustomer_types(Customer_types customer_types) {
-        this.customer_types = customer_types;
+    public void setCustomer_type_id(int customer_type_id) {
+        this.customer_type_id = customer_type_id;
     }
 
-    public Customer_contacts getCustomer_contacts() {
-        return customer_contacts;
+    public int getCustomer_contact_id() {
+        return customer_contact_id;
     }
 
-    public void setCustomer_contacts(Customer_contacts customer_contacts) {
-        this.customer_contacts = customer_contacts;
+    public void setCustomer_contact_id(int customer_contact_id) {
+        this.customer_contact_id = customer_contact_id;
     }
 
     @Override
@@ -53,8 +53,8 @@ public class Customers {
         return "Customers{" +
                 "id=" + id +
                 ", customer_name='" + customer_name + '\'' +
-                ", customer_types=" + customer_types +
-                ", customer_contacts=" + customer_contacts +
+                ", customer_type_id=" + customer_type_id +
+                ", customer_contact_id=" + customer_contact_id +
                 '}';
     }
 }

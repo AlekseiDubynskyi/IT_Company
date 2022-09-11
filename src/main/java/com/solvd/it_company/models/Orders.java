@@ -8,24 +8,24 @@ public class Orders {
     private Date date_creation;
     private String payment_type;
     private Date date_payment;
-    private Customers customers;
-    private Teams teams;
-    private Discount discount;
-    private Service_category service_category;
+    private int customer_id;
+    private int team_id;
+    private int discount_id;
+    private int service_category_id;
 
     public Orders() {
     }
 
-    public Orders(int id, double price, Date date_creation, String payment_type, Date date_payment, Customers customers, Teams teams, Discount discount, Service_category service_category) {
+    public Orders(int id, double price, Date date_creation, String payment_type, Date date_payment, int customer_id, int team_id, int discount_id, int service_category_id) {
         this.id = id;
         this.price = price;
         this.date_creation = date_creation;
         this.payment_type = payment_type;
         this.date_payment = date_payment;
-        this.customers = customers;
-        this.teams = teams;
-        this.discount = discount;
-        this.service_category = service_category;
+        this.customer_id = customer_id;
+        this.team_id = team_id;
+        this.discount_id = discount_id;
+        this.service_category_id = service_category_id;
     }
 
     public int getId() {
@@ -68,36 +68,36 @@ public class Orders {
         this.date_payment = date_payment;
     }
 
-    public Customers getCustomers() {
-        return customers;
+    public int getCustomer_id() {
+        return customer_id;
     }
 
-    public void setCustomers(Customers customers) {
-        this.customers = customers;
+    public void setCustomer_id(int customer_id) {
+        this.customer_id = customer_id;
     }
 
-    public Teams getTeams() {
-        return teams;
+    public int getTeam_id() {
+        return team_id;
     }
 
-    public void setTeams(Teams teams) {
-        this.teams = teams;
+    public void setTeam_id(int team_id) {
+        this.team_id = team_id;
     }
 
-    public Discount getDiscount() {
-        return discount;
+    public int getDiscount_id() {
+        return discount_id;
     }
 
-    public void setDiscount(Discount discount) {
-        this.discount = discount;
+    public void setDiscount_id(int discount_id) {
+        this.discount_id = discount_id;
     }
 
-    public Service_category getService_category() {
-        return service_category;
+    public int getService_category_id() {
+        return service_category_id;
     }
 
-    public void setService_category(Service_category service_category) {
-        this.service_category = service_category;
+    public void setService_category_id(int service_category_id) {
+        this.service_category_id = service_category_id;
     }
 
     @Override
@@ -108,10 +108,10 @@ public class Orders {
                 ", date_creation=" + date_creation +
                 ", payment_type='" + payment_type + '\'' +
                 ", date_payment=" + date_payment +
-                ", customers=" + customers +
-                ", teams=" + teams +
-                ", discount=" + discount +
-                ", service_category=" + service_category +
+                ", customer_id=" + customer_id +
+                ", team_id=" + team_id +
+                ", discount_id=" + discount_id +
+                ", service_category_id=" + service_category_id +
                 '}';
     }
 }

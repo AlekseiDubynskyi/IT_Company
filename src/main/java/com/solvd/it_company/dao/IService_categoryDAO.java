@@ -11,7 +11,7 @@ public interface IService_categoryDAO {
 
     List<Service_category> getAllService_categories();
 
-    void addService_category(int id, Services services, Categories categories);
+    void addService_category(int id, int service_id, int category_id);
 
     void updateService_category(Service_category service_category);
 

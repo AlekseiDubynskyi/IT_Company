@@ -1,7 +1,6 @@
 package com.solvd.it_company.dao;
 
 import com.solvd.it_company.models.City;
-import com.solvd.it_company.models.Country;
 
 import java.util.List;
 
@@ -10,7 +9,7 @@ public interface ICityDAO {
 
     List<City> getAllCities();
 
-    void addCity(int id, String city, Country country);
+    void addCity(int id, String city, int country_id);
 
     void updateCity(City city);
 

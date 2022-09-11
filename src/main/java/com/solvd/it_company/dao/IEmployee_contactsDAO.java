@@ -10,7 +10,7 @@ public interface IEmployee_contactsDAO {
 
     List<Employee_contacts> getAllEmployee_contacts();
 
-    void addEmployee_contact(int id, String phone_number, String email, Addresses addresses);
+    void addEmployee_contact(int id, String phone_number, String email, int address_id);
 
     void updateEmployee_contact(Employee_contacts employee_contacts);
 

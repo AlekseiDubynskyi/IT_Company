@@ -5,17 +5,17 @@ public class Customer_contacts {
     private String responsible_person_name;
     private String phone_number;
     private String email;
-    private Addresses addresses;
+    private int address_id;
 
     public Customer_contacts() {
     }
 
-    public Customer_contacts(int id, String responsible_person_name, String phone_number, String email, Addresses addresses) {
+    public Customer_contacts(int id, String responsible_person_name, String phone_number, String email, int address_id) {
         this.id = id;
         this.responsible_person_name = responsible_person_name;
         this.phone_number = phone_number;
         this.email = email;
-        this.addresses = addresses;
+        this.address_id = address_id;
     }
 
     public int getId() {
@@ -50,12 +50,12 @@ public class Customer_contacts {
         this.email = email;
     }
 
-    public Addresses getAddresses() {
-        return addresses;
+    public int getAddress_id() {
+        return address_id;
     }
 
-    public void setAddresses(Addresses addresses) {
-        this.addresses = addresses;
+    public void setAddress_id(int address_id) {
+        this.address_id = address_id;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class Customer_contacts {
                 ", responsible_person_name='" + responsible_person_name + '\'' +
                 ", phone_number='" + phone_number + '\'' +
                 ", email='" + email + '\'' +
-                ", addresses=" + addresses +
+                ", address_id=" + address_id +
                 '}';
     }
 }

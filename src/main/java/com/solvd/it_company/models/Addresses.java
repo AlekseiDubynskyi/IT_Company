@@ -5,17 +5,17 @@ public class Addresses {
     private String address;
     private String district;
     private String postal_code;
-    private City city;
+    private int city_id;
 
     public Addresses() {
     }
 
-    public Addresses(int id, String address, String district, String postal_code, City city) {
+    public Addresses(int id, String address, String district, String postal_code, int city_id) {
         this.id = id;
         this.address = address;
         this.district = district;
         this.postal_code = postal_code;
-        this.city = city;
+        this.city_id = city_id;
     }
 
     public int getId() {
@@ -50,12 +50,12 @@ public class Addresses {
         this.postal_code = postal_code;
     }
 
-    public City getCity() {
-        return city;
+    public int getCity_id() {
+        return city_id;
     }
 
-    public void setCity(City city) {
-        this.city = city;
+    public void setCity_id(int city_id) {
+        this.city_id = city_id;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class Addresses {
                 ", address='" + address + '\'' +
                 ", district='" + district + '\'' +
                 ", postal_code='" + postal_code + '\'' +
-                ", city=" + city +
+                ", city_id=" + city_id +
                 '}';
     }
 }

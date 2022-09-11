@@ -4,16 +4,16 @@ public class Employee_contacts {
     private int id;
     private String phone_number;
     private String email;
-    private Addresses addresses;
+    private int address_id;
 
     public Employee_contacts() {
     }
 
-    public Employee_contacts(int id, String phone_number, String email, Addresses addresses) {
+    public Employee_contacts(int id, String phone_number, String email, int address_id) {
         this.id = id;
         this.phone_number = phone_number;
         this.email = email;
-        this.addresses = addresses;
+        this.address_id = address_id;
     }
 
     public int getId() {
@@ -40,12 +40,12 @@ public class Employee_contacts {
         this.email = email;
     }
 
-    public Addresses getAddresses() {
-        return addresses;
+    public int getAddress_id() {
+        return address_id;
     }
 
-    public void setAddresses(Addresses addresses) {
-        this.addresses = addresses;
+    public void setAddress_id(int address_id) {
+        this.address_id = address_id;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class Employee_contacts {
                 "id=" + id +
                 ", phone_number='" + phone_number + '\'' +
                 ", email='" + email + '\'' +
-                ", addresses=" + addresses +
+                ", address_id=" + address_id +
                 '}';
     }
 }

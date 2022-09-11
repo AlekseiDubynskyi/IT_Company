@@ -2,16 +2,16 @@ package com.solvd.it_company.models;
 
 public class Service_category {
     private int id;
-    private Services services;
-    private Categories categories;
+    private int service_id;
+    private int category_id;
 
     public Service_category() {
     }
 
-    public Service_category(int id, Services services, Categories categories) {
+    public Service_category(int id, int service_id, int category_id) {
         this.id = id;
-        this.services = services;
-        this.categories = categories;
+        this.service_id = service_id;
+        this.category_id = category_id;
     }
 
     public int getId() {
@@ -22,28 +22,28 @@ public class Service_category {
         this.id = id;
     }
 
-    public Services getServices() {
-        return services;
+    public int getService_id() {
+        return service_id;
     }
 
-    public void setServices(Services services) {
-        this.services = services;
+    public void setService_id(int service_id) {
+        this.service_id = service_id;
     }
 
-    public Categories getCategories() {
-        return categories;
+    public int getCategory_id() {
+        return category_id;
     }
 
-    public void setCategories(Categories categories) {
-        this.categories = categories;
+    public void setCategory_id(int category_id) {
+        this.category_id = category_id;
     }
 
     @Override
     public String toString() {
         return "Service_category{" +
                 "id=" + id +
-                ", services=" + services +
-                ", categories=" + categories +
+                ", service_id=" + service_id +
+                ", category_id=" + category_id +
                 '}';
     }
 }

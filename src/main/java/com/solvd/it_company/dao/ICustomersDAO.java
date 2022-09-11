@@ -9,7 +9,7 @@ public interface ICustomersDAO {
 
     List<Customers> getAllCustomers();
 
-    void addCustomer(int id, String customer_name, Customer_types customer_types, Customer_contacts customer_contacts);
+    void addCustomer(int id, String customer_name, int customer_type_id, int customer_contact_id);
 
     void updateCustomer(Customers customers);
 

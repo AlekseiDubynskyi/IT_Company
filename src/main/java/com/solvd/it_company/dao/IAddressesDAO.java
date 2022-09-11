@@ -10,7 +10,7 @@ public interface IAddressesDAO {
 
     List<Addresses> getAllAddresses();
 
-    void addAddress(int id, String address, String district, String postal_code, City city);
+    void addAddress(int id, String address, String district, String postal_code, int city_id);
 
     void updateAddress(Addresses addresses);
 

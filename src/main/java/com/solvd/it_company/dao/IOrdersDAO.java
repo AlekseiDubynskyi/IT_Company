@@ -10,8 +10,7 @@ public interface IOrdersDAO {
 
     List<Orders> getAllOrders();
 
-    void addOrder(int id, double price, Date date_creation, String payment_type, Date date_payment, Customers customers,
-                  Teams teams, Discount discount, Service_category service_category);
+    void addOrder(int id, double price, Date date_creation, String payment_type, Date date_payment, int customer_id, int team_id, int discount_id, int service_category_id);
 
     void updateOrder(Orders orders);
 
