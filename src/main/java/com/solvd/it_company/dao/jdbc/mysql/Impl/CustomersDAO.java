@@ -4,26 +4,47 @@ import com.solvd.it_company.connection.ConnectionUtil;
 import com.solvd.it_company.dao.ICustomersDAO;
 import com.solvd.it_company.models.Customer_types;
 import com.solvd.it_company.models.Customers;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
 public class CustomersDAO implements ICustomersDAO {
+    private static final Logger LOGGER = LogManager.getLogger(CustomersDAO.class);
     List<Customers> customers = new LinkedList<>();
 
     @Override
     public Customers getCustomerById(int id) {
+        ResultSet resultSet = null;
+        Statement statement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Customers WHERE id=" + id);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM Customers WHERE id=" + id);
             if (resultSet.next()) {
-                System.out.println(getCustomerById(resultSet));
+                LOGGER.info(getCustomerById(resultSet));
                 return getCustomerById(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
         return null;
     }
@@ -39,66 +60,119 @@ public class CustomersDAO implements ICustomersDAO {
 
     @Override
     public List<Customers> getAllCustomers() {
-        PreparedStatement preparedStatement;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
             preparedStatement = connection.prepareStatement("SELECT * FROM Customers");
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 customers.add(getCustomerById(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (resultSet != null) resultSet.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
         return customers;
     }
 
     @Override
     public void addCustomer(int id, String customer_name, int customer_type_id, int customer_contact_id) {
+        PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Customers VALUE(default, ?, ?, ?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO Customers VALUE(default, ?, ?, ?)");
             preparedStatement.setString(1, customer_name);
             preparedStatement.setInt(2, customer_type_id);
             preparedStatement.setInt(3, customer_contact_id);
             if (preparedStatement.executeUpdate() == 1) {
-                System.out.println("Insertion is successful.");
+                LOGGER.info("Insertion is successful.");
             } else
-                System.out.println("Insertion was failed.");
+                LOGGER.info("Insertion was failed.");
         } catch (SQLException e) {
             e.getMessage();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
     }
 
     @Override
     public void updateCustomer(Customers customers) {
+        PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Customers SET customer_name=?, customer_type_id=?, customer_contact_id=? WHERE id=?");
+            preparedStatement = connection.prepareStatement("UPDATE Customers SET customer_name=?, customer_type_id=?, customer_contact_id=? WHERE id=?");
             preparedStatement.setString(1, customers.getCustomer_name());
             preparedStatement.setInt(2, customers.getCustomer_type_id());
             preparedStatement.setInt(3, customers.getCustomer_contact_id());
             preparedStatement.setInt(4, customers.getId());
             if (preparedStatement.executeUpdate() == 1) {
-                System.out.println("Update process is successful: " + customers.getId() + " - " + customers.getCustomer_name());
+                LOGGER.info("Update process is successful: " + customers.getId() + " - " + customers.getCustomer_name());
             } else
-                System.out.println("Update process was failed: " + customers.getId() + " - " + customers.getCustomer_name());
+                LOGGER.info("Update process was failed: " + customers.getId() + " - " + customers.getCustomer_name());
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
     }
 
     @Override
     public void deleteCustomer(int id) {
+        PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Customers WHERE id=" + id);
+            preparedStatement = connection.prepareStatement("DELETE FROM Customers WHERE id=" + id);
             if (preparedStatement.executeUpdate() == 1) {
-                System.out.println("Delete process is successful.");
+                LOGGER.info("Delete process is successful.");
             } else
-                System.out.println("Delete process was failed.");
+                LOGGER.info("Delete process was failed.");
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
     }
 }

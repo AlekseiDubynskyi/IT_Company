@@ -3,26 +3,47 @@ package com.solvd.it_company.dao.jdbc.mysql.Impl;
 import com.solvd.it_company.connection.ConnectionUtil;
 import com.solvd.it_company.dao.IAddressesDAO;
 import com.solvd.it_company.models.Addresses;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
 public class AddressesDAO implements IAddressesDAO {
+    private static final Logger LOGGER = LogManager.getLogger(AddressesDAO.class);
     List<Addresses> addresses = new LinkedList<>();
 
     @Override
     public Addresses getAddressById(int id) {
+        ResultSet resultSet = null;
+        Statement statement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Addresses WHERE id=" + id);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM Addresses WHERE id=" + id);
             if (resultSet.next()) {
-                System.out.println(getAddressById(resultSet));
+                LOGGER.info(getAddressById(resultSet));
                 return getAddressById(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
         return null;
     }
@@ -39,43 +60,73 @@ public class AddressesDAO implements IAddressesDAO {
 
     @Override
     public List<Addresses> getAllAddresses() {
-        PreparedStatement preparedStatement;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
             preparedStatement = connection.prepareStatement("SELECT * FROM Addresses");
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 addresses.add(getAddressById(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (resultSet != null) resultSet.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
         return addresses;
     }
 
     @Override
     public void addAddress(int id, String address, String district, String postal_code, int city_id) {
+        PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Addresses VALUE(default, ?, ?, ?, ?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO Addresses VALUE(default, ?, ?, ?, ?)");
             preparedStatement.setString(1, address);
             preparedStatement.setString(2, district);
             preparedStatement.setString(3, postal_code);
             preparedStatement.setInt(4, city_id);
             if (preparedStatement.executeUpdate() == 1) {
-                System.out.println("Insertion is successful.");
+                LOGGER.info("Insertion is successful.");
             } else
-                System.out.println("Insertion was failed.");
+                LOGGER.info("Insertion was failed.");
         } catch (SQLException e) {
             e.getMessage();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
     }
 
     @Override
     public void updateAddress(Addresses addresses) {
+        PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Addresses SET address=?, district=?, " +
+            preparedStatement = connection.prepareStatement("UPDATE Addresses SET address=?, district=?, " +
                     "postal_code=?, city_id=? WHERE id=?");
             preparedStatement.setString(1, addresses.getAddress());
             preparedStatement.setString(2, addresses.getDistrict());
@@ -83,25 +134,48 @@ public class AddressesDAO implements IAddressesDAO {
             preparedStatement.setInt(4, addresses.getCity_id());
             preparedStatement.setInt(5, addresses.getId());
             if (preparedStatement.executeUpdate() == 1) {
-                System.out.println("Update process is successful: " + addresses.getId() + "-" + addresses.getAddress());
+                LOGGER.info("Update process is successful: " + addresses.getId() + " - " + addresses.getAddress());
             } else
-                System.out.println("Update process was failed: " + addresses.getId() + "-" + addresses.getAddress());
+                LOGGER.info("Update process was failed: " + addresses.getId() + " - " + addresses.getAddress());
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
     }
 
     @Override
     public void deleteAddress(int id) {
+        PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Addresses WHERE id=" + id);
+            preparedStatement = connection.prepareStatement("DELETE FROM Addresses WHERE id=" + id);
             if (preparedStatement.executeUpdate() == 1) {
-                System.out.println("Delete process is successful.");
+                LOGGER.info("Delete process is successful.");
             } else
-                System.out.println("Delete process was failed.");
+                LOGGER.info("Delete process was failed.");
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
     }
 }

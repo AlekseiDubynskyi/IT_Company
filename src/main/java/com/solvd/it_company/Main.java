@@ -12,35 +12,31 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class Main {
-    private final static Logger MAIN_LOGGER = LogManager.getLogger(Main.class);
-    private static ICountryDAO CountryDAO;
-    public static void main(String[] args) throws InterruptedException {
-        // create a new connection from MySQLJDBCUtil
+    private final static Logger LOGGER = LogManager.getLogger(Main.class);
+
+    public static void main(String[] args) {
         try (Connection connection = ConnectionUtil.getConnection()) {
-            // print out a message
-            System.out.println(String.format("Connected to database %s"
+            LOGGER.info(String.format("Connected to database %s"
                     + " successfully.", connection.getCatalog()));
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            LOGGER.info(ex.getMessage());
         }
 
-        MAIN_LOGGER.info("Hi!");
+        ICountryDAO countryDAO = new CountryDAO();
 
-        CountryDAO = new CountryDAO();
+        List<Country> countries = countryDAO.getAllCountries();
+        LOGGER.info(countries);
 
-        List<Country> countries = CountryDAO.getAllCountries();
-        System.out.println(countries);
+        countryDAO.addCountry(8, "Germany");
 
-        CountryDAO.addCountry(8,"Germany");
+        countryDAO.getCountryById(12);
 
-        CountryDAO.getCountryById(8);
+        countryDAO.updateCountry(new Country(8, "Austria"));
 
-        CountryDAO.updateCountry(new Country(8, "Austria"));
+        countryDAO.getCountryById(8);
 
-        CountryDAO.getCountryById(8);
+        countryDAO.deleteCountry(8);
 
-        CountryDAO.deleteCountry(8);
-
-        System.out.println(countries);
+        LOGGER.info(countries);
     }
 }

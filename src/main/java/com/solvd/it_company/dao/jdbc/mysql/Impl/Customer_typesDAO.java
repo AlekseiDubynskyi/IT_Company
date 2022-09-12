@@ -3,26 +3,47 @@ package com.solvd.it_company.dao.jdbc.mysql.Impl;
 import com.solvd.it_company.connection.ConnectionUtil;
 import com.solvd.it_company.dao.ICustomer_typesDAO;
 import com.solvd.it_company.models.Customer_types;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Customer_typesDAO implements ICustomer_typesDAO {
+    private static final Logger LOGGER = LogManager.getLogger(Customer_typesDAO.class);
     List<Customer_types> customer_types = new LinkedList<>();
 
     @Override
     public Customer_types getCustomer_typeById(int id) {
+        ResultSet resultSet = null;
+        Statement statement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Customer_types WHERE id=" + id);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM Customer_types WHERE id=" + id);
             if (resultSet.next()) {
-                System.out.println(getCustomer_typeById(resultSet));
+                LOGGER.info(getCustomer_typeById(resultSet));
                 return getCustomer_typeById(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
         return null;
     }
@@ -36,62 +57,115 @@ public class Customer_typesDAO implements ICustomer_typesDAO {
 
     @Override
     public List<Customer_types> getAllCustomer_types() {
-        PreparedStatement preparedStatement;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
             preparedStatement = connection.prepareStatement("SELECT * FROM Customer_types");
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 customer_types.add(getCustomer_typeById(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (resultSet != null) resultSet.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
         return customer_types;
     }
 
     @Override
     public void addCustomer_type(int id, String customer_type) {
+        PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Customer_types VALUE(default, ?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO Customer_types VALUE(default, ?)");
             preparedStatement.setString(1, customer_type);
             if (preparedStatement.executeUpdate() == 1) {
-                System.out.println("Insertion is successful.");
+                LOGGER.info("Insertion is successful.");
             } else
-                System.out.println("Insertion was failed.");
+                LOGGER.info("Insertion was failed.");
         } catch (SQLException e) {
             e.getMessage();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
     }
 
     @Override
     public void updateCustomer_type(Customer_types customer_types) {
+        PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Customer_types SET customer_type=? WHERE id=?");
+            preparedStatement = connection.prepareStatement("UPDATE Customer_types SET customer_type=? WHERE id=?");
             preparedStatement.setString(1, customer_types.getCustomer_type());
             preparedStatement.setInt(2, customer_types.getId());
             if (preparedStatement.executeUpdate() == 1) {
-                System.out.println("Update process is successful: " + customer_types.getId() + " - " + customer_types.getCustomer_type());
+                LOGGER.info("Update process is successful: " + customer_types.getId() + " - " + customer_types.getCustomer_type());
             } else
-                System.out.println("Update process was failed: " + customer_types.getId() + " - " + customer_types.getCustomer_type());
+                LOGGER.info("Update process was failed: " + customer_types.getId() + " - " + customer_types.getCustomer_type());
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
     }
 
     @Override
     public void deleteCustomer_type(int id) {
+        PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Customer_types WHERE id=" + id);
+            preparedStatement = connection.prepareStatement("DELETE FROM Customer_types WHERE id=" + id);
             if (preparedStatement.executeUpdate() == 1) {
-                System.out.println("Delete process is successful.");
+                LOGGER.info("Delete process is successful.");
             } else
-                System.out.println("Delete process was failed.");
+                LOGGER.info("Delete process was failed.");
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
     }
 }

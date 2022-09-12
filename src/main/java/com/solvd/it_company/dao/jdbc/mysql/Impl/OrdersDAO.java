@@ -4,6 +4,8 @@ import com.solvd.it_company.connection.ConnectionUtil;
 import com.solvd.it_company.dao.IOrdersDAO;
 import com.solvd.it_company.models.Customer_types;
 import com.solvd.it_company.models.Orders;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.Date;
@@ -11,20 +13,39 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class OrdersDAO implements IOrdersDAO {
+    private static final Logger LOGGER = LogManager.getLogger(OrdersDAO.class);
     List<Orders> orders = new LinkedList<>();
 
     @Override
     public Orders getOrderById(int id) {
+        ResultSet resultSet = null;
+        Statement statement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Orders WHERE id=" + id);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM Orders WHERE id=" + id);
             if (resultSet.next()) {
-                System.out.println(getOrderById(resultSet));
+                LOGGER.info(getOrderById(resultSet));
                 return getOrderById(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
         return null;
     }
@@ -45,25 +66,43 @@ public class OrdersDAO implements IOrdersDAO {
 
     @Override
     public List<Orders> getAllOrders() {
-        PreparedStatement preparedStatement;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
             preparedStatement = connection.prepareStatement("SELECT * FROM Orders");
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 orders.add(getOrderById(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (resultSet != null) resultSet.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
         return orders;
     }
 
     @Override
     public void addOrder(int id, double price, Date date_creation, String payment_type, Date date_payment, int customer_id, int team_id, int discount_id, int service_category_id) {
+        PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Orders VALUE(default, ?, ?, ?, ?, ?, ?, ?, ?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO Orders VALUE(default, ?, ?, ?, ?, ?, ?, ?, ?)");
             preparedStatement.setDouble(1, price);
             preparedStatement.setDate(2, (java.sql.Date) date_creation);
             preparedStatement.setString(3, payment_type);
@@ -73,19 +112,31 @@ public class OrdersDAO implements IOrdersDAO {
             preparedStatement.setInt(7, discount_id);
             preparedStatement.setInt(8, service_category_id);
             if (preparedStatement.executeUpdate() == 1) {
-                System.out.println("Insertion is successful.");
+                LOGGER.info("Insertion is successful.");
             } else
-                System.out.println("Insertion was failed.");
+                LOGGER.info("Insertion was failed.");
         } catch (SQLException e) {
             e.getMessage();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
     }
 
     @Override
     public void updateOrder(Orders orders) {
+        PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Orders SET price=?, date_creation=?, payment_type=?, date_payment=?, customer_id=?, team_id=?, discount_id=?, service_category_id=? WHERE id=?");
+            preparedStatement = connection.prepareStatement("UPDATE Orders SET price=?, date_creation=?, payment_type=?, date_payment=?, customer_id=?, team_id=?, discount_id=?, service_category_id=? WHERE id=?");
             preparedStatement.setDouble(1, orders.getPrice());
             preparedStatement.setDate(2, (java.sql.Date) orders.getDate_creation());
             preparedStatement.setString(3,orders.getPayment_type());
@@ -96,25 +147,48 @@ public class OrdersDAO implements IOrdersDAO {
             preparedStatement.setInt(8, orders.getService_category_id());
             preparedStatement.setInt(9, orders.getId());
             if (preparedStatement.executeUpdate() == 1) {
-                System.out.println("Update process is successful: " + orders.getId());
+                LOGGER.info("Update process is successful: " + orders.getId());
             } else
-                System.out.println("Update process was failed: " + orders.getId());
+                LOGGER.info("Update process was failed: " + orders.getId());
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
     }
 
     @Override
     public void deleteOrder(int id) {
+        PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Orders WHERE id=" + id);
+            preparedStatement = connection.prepareStatement("DELETE FROM Orders WHERE id=" + id);
             if (preparedStatement.executeUpdate() == 1) {
-                System.out.println("Delete process is successful.");
+                LOGGER.info("Delete process is successful.");
             } else
-                System.out.println("Delete process was failed.");
+                LOGGER.info("Delete process was failed.");
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
     }
 }

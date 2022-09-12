@@ -7,26 +7,47 @@ import com.solvd.it_company.models.Categories;
 import com.solvd.it_company.models.City;
 import com.solvd.it_company.models.Service_category;
 import com.solvd.it_company.models.Services;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Service_categoryDAO implements IService_categoryDAO {
+    private static final Logger LOGGER = LogManager.getLogger(Service_categoryDAO.class);
     List<Service_category> service_categories = new LinkedList<>();
 
     @Override
     public Service_category getService_categoryById(int id) {
+        ResultSet resultSet = null;
+        Statement statement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Service_category WHERE id=" + id);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM Service_category WHERE id=" + id);
             if (resultSet.next()) {
-                System.out.println(getService_categoryById(resultSet));
+                LOGGER.info(getService_categoryById(resultSet));
                 return getService_categoryById(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
         return null;
     }
@@ -41,64 +62,117 @@ public class Service_categoryDAO implements IService_categoryDAO {
 
     @Override
     public List<Service_category> getAllService_categories() {
-        PreparedStatement preparedStatement;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
             preparedStatement = connection.prepareStatement("SELECT * FROM Service_category");
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 service_categories.add(getService_categoryById(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (resultSet != null) resultSet.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
         return service_categories;
     }
 
     @Override
     public void addService_category(int id, int service_id, int category_id) {
+        PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Service_category VALUE(default, ?, ?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO Service_category VALUE(default, ?, ?)");
             preparedStatement.setInt(1, service_id);
             preparedStatement.setInt(2, category_id);
             if (preparedStatement.executeUpdate() == 1) {
-                System.out.println("Insertion is successful.");
+                LOGGER.info("Insertion is successful.");
             } else
-                System.out.println("Insertion was failed.");
+                LOGGER.info("Insertion was failed.");
         } catch (SQLException e) {
             e.getMessage();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
     }
 
     @Override
     public void updateService_category(Service_category service_category) {
+        PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Service_category SET service_id=?, category_id=? WHERE id=?");
+            preparedStatement = connection.prepareStatement("UPDATE Service_category SET service_id=?, category_id=? WHERE id=?");
             preparedStatement.setInt(1, service_category.getService_id());
             preparedStatement.setInt(2, service_category.getCategory_id());
             preparedStatement.setInt(3, service_category.getId());
             if (preparedStatement.executeUpdate() == 1) {
-                System.out.println("Update process is successful: " + service_category.getId() + "-" + service_category.getService_id() + service_category.getCategory_id());
+                LOGGER.info("Update process is successful: " + service_category.getId() + " - " + service_category.getService_id() + service_category.getCategory_id());
             } else
-                System.out.println("Update process was failed: " + service_category.getId() + "-" + service_category.getService_id() + service_category.getCategory_id());
+                LOGGER.info("Update process was failed: " + service_category.getId() + " - " + service_category.getService_id() + service_category.getCategory_id());
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
     }
 
     @Override
     public void deleteService_category(int id) {
+        PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Service_category WHERE id=" + id);
+            preparedStatement = connection.prepareStatement("DELETE FROM Service_category WHERE id=" + id);
             if (preparedStatement.executeUpdate() == 1) {
-                System.out.println("Delete process is successful.");
+                LOGGER.info("Delete process is successful.");
             } else
-                System.out.println("Delete process was failed.");
+                LOGGER.info("Delete process was failed.");
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
     }
 }

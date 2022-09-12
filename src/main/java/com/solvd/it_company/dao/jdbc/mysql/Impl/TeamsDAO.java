@@ -4,30 +4,52 @@ import com.solvd.it_company.connection.ConnectionUtil;
 import com.solvd.it_company.dao.ITeamsDAO;
 import com.solvd.it_company.models.Positions;
 import com.solvd.it_company.models.Teams;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
 public class TeamsDAO implements ITeamsDAO {
+    private static final Logger LOGGER = LogManager.getLogger(TeamsDAO.class);
     List<Teams> teams = new LinkedList<>();
+
     @Override
     public Teams getTeamById(int id) {
+        ResultSet resultSet = null;
+        Statement statement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Teams WHERE id=" + id);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM Teams WHERE id=" + id);
             if (resultSet.next()) {
-                System.out.println(getTeamById(resultSet));
+                LOGGER.info(getTeamById(resultSet));
                 return getTeamById(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
         return null;
     }
 
-    private Teams getTeamById(ResultSet resultSet) throws SQLException{
+    private Teams getTeamById(ResultSet resultSet) throws SQLException {
         Teams newTeam = new Teams();
         newTeam.setId(resultSet.getInt("id"));
         newTeam.setTeam_name(resultSet.getString("team_name"));
@@ -36,62 +58,115 @@ public class TeamsDAO implements ITeamsDAO {
 
     @Override
     public List<Teams> getAllTeams() {
-        PreparedStatement preparedStatement;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
             preparedStatement = connection.prepareStatement("SELECT * FROM Teams");
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 teams.add(getTeamById(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (resultSet != null) resultSet.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
         return teams;
     }
 
     @Override
     public void addTeam(int id, String team_name) {
+        PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Teams VALUE(default, ?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO Teams VALUE(default, ?)");
             preparedStatement.setString(1, team_name);
             if (preparedStatement.executeUpdate() == 1) {
-                System.out.println("Insertion is successful.");
+                LOGGER.info("Insertion is successful.");
             } else
-                System.out.println("Insertion was failed.");
+                LOGGER.info("Insertion was failed.");
         } catch (SQLException e) {
             e.getMessage();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
     }
 
     @Override
     public void updateTeam(Teams teams) {
+        PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Teams SET team_name=? WHERE id=?");
+            preparedStatement = connection.prepareStatement("UPDATE Teams SET team_name=? WHERE id=?");
             preparedStatement.setString(1, teams.getTeam_name());
             preparedStatement.setInt(2, teams.getId());
             if (preparedStatement.executeUpdate() == 1) {
-                System.out.println("Update process is successful: " + teams.getId() + "-" + teams.getTeam_name());
+                LOGGER.info("Update process is successful: " + teams.getId() + " - " + teams.getTeam_name());
             } else
-                System.out.println("Update process was failed: " + teams.getId() + "-" + teams.getTeam_name());
+                LOGGER.info("Update process was failed: " + teams.getId() + " - " + teams.getTeam_name());
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
     }
 
     @Override
     public void deleteTeam(int id) {
+        PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Teams WHERE id=" + id);
+            preparedStatement = connection.prepareStatement("DELETE FROM Teams WHERE id=" + id);
             if (preparedStatement.executeUpdate() == 1) {
-                System.out.println("Delete process is successful.");
+                LOGGER.info("Delete process is successful.");
             } else
-                System.out.println("Delete process was failed.");
+                LOGGER.info("Delete process was failed.");
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
     }
 }

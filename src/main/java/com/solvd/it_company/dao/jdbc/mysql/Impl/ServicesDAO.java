@@ -3,26 +3,47 @@ package com.solvd.it_company.dao.jdbc.mysql.Impl;
 import com.solvd.it_company.connection.ConnectionUtil;
 import com.solvd.it_company.dao.IServicesDAO;
 import com.solvd.it_company.models.Services;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
 public class ServicesDAO implements IServicesDAO {
+    private static final Logger LOGGER = LogManager.getLogger(ServicesDAO.class);
     List<Services> services = new LinkedList<>();
 
     @Override
     public Services getServiceById(int id) {
+        ResultSet resultSet = null;
+        Statement statement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Services WHERE id=" + id);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM Services WHERE id=" + id);
             if (resultSet.next()) {
-                System.out.println(getServiceById(resultSet));
+                LOGGER.info(getServiceById(resultSet));
                 return getServiceById(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
         return null;
     }
@@ -37,65 +58,118 @@ public class ServicesDAO implements IServicesDAO {
 
     @Override
     public List<Services> getAllServices() {
-        PreparedStatement preparedStatement;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
             preparedStatement = connection.prepareStatement("SELECT * FROM Services");
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 services.add(getServiceById(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (resultSet != null) resultSet.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
         return services;
     }
 
     @Override
     public void addService(int id, String service_name, String lead_time) {
+        PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Services VALUE(default, ?, ?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO Services VALUE(default, ?, ?)");
             preparedStatement.setString(1, service_name);
             preparedStatement.setString(2,lead_time);
             if (preparedStatement.executeUpdate() == 1) {
-                System.out.println("Insertion is successful.");
+                LOGGER.info("Insertion is successful.");
             } else
-                System.out.println("Insertion was failed.");
+                LOGGER.info("Insertion was failed.");
         } catch (SQLException e) {
             e.getMessage();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
     }
 
     @Override
     public void updateService(Services services) {
+        PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Services SET service_name=?, " +
+            preparedStatement = connection.prepareStatement("UPDATE Services SET service_name=?, " +
                     "lead_time=? WHERE id=?");
             preparedStatement.setString(1, services.getService_name());
             preparedStatement.setString(2, services.getLead_time());
             preparedStatement.setInt(3, services.getId());
             if (preparedStatement.executeUpdate() == 1) {
-                System.out.println("Update process is successful: " + services.getId() + "-" + services.getService_name() + " " + services.getLead_time());
+                LOGGER.info("Update process is successful: " + services.getId() + " - " + services.getService_name() + " " + services.getLead_time());
             } else
-                System.out.println("Update process was failed: " + services.getId() + "-" + services.getService_name() + " " + services.getLead_time());
+                LOGGER.info("Update process was failed: " + services.getId() + " - " + services.getService_name() + " " + services.getLead_time());
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
     }
 
     @Override
     public void deleteService(int id) {
+        PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Services WHERE id=" + id);
+            preparedStatement = connection.prepareStatement("DELETE FROM Services WHERE id=" + id);
             if (preparedStatement.executeUpdate() == 1) {
-                System.out.println("Delete process is successful.");
+                LOGGER.info("Delete process is successful.");
             } else
-                System.out.println("Delete process was failed.");
+                LOGGER.info("Delete process was failed.");
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
         }
     }
 }
