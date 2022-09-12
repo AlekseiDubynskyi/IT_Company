@@ -24,6 +24,7 @@ public class Main {
             System.out.println(ex.getMessage());
         }
 
+        MAIN_LOGGER.info("Hi!");
 
         CountryDAO = new CountryDAO();
 
