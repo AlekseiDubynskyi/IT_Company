@@ -1,4 +1,4 @@
-package com.solvd.it_company.sax_task;
+package com.solvd.it_company.saxTask;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -12,7 +12,7 @@ public class AddressHandler extends DefaultHandler {
     private AddressesSAX addressesSAX;
     boolean isStreet = false;
     boolean isDistrict = false;
-    boolean isPostal_code = false;
+    boolean isPostalCode = false;
     boolean isCity = false;
 
     @Override
@@ -25,8 +25,8 @@ public class AddressHandler extends DefaultHandler {
             isStreet = true;
         } else if (qName.equalsIgnoreCase("district")) {
             isDistrict = true;
-        } else if (qName.equalsIgnoreCase("postal_code")) {
-            isPostal_code = true;
+        } else if (qName.equalsIgnoreCase("postalCode")) {
+            isPostalCode = true;
         } else if (qName.equalsIgnoreCase("city")) {
             isCity = true;
         }
@@ -47,9 +47,9 @@ public class AddressHandler extends DefaultHandler {
         } else if (isDistrict) {
             addressesSAX.setDistrict(new String(chars, start, length));
             isDistrict = false;
-        } else if (isPostal_code) {
-            addressesSAX.setPostal_code(new String(chars, start, length));
-            isPostal_code = false;
+        } else if (isPostalCode) {
+            addressesSAX.setPostalCode(new String(chars, start, length));
+            isPostalCode = false;
         } else if (isCity) {
             addressesSAX.setCity(new String(chars, start, length));
             isCity = false;

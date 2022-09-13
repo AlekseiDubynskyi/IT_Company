@@ -2,14 +2,18 @@ package com.solvd.it_company.models;
 
 public class Categories {
     private int id;
-    private String category_name;
+    private String categoryName;
 
     public Categories() {
     }
 
-    public Categories(int id, String category_name) {
+    public Categories(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public Categories(int id, String categoryName) {
         this.id = id;
-        this.category_name = category_name;
+        this.categoryName = categoryName;
     }
 
     public int getId() {
@@ -20,19 +24,19 @@ public class Categories {
         this.id = id;
     }
 
-    public String getCategory_name() {
-        return category_name;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategory_name(String category_name) {
-        this.category_name = category_name;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     @Override
     public String toString() {
         return "Categories{" +
                 "id=" + id +
-                ", category_name='" + category_name + '\'' +
+                ", category name='" + categoryName + '\'' +
                 '}';
     }
 }

@@ -3,15 +3,20 @@ package com.solvd.it_company.models;
 public class City {
     private int id;
     private String city;
-    private int country_id;
+    private int countryId;
 
     public City() {
     }
 
-    public City(int id, String city, int country_id) {
+    public City(String city, int countryId) {
+        this.city = city;
+        this.countryId = countryId;
+    }
+
+    public City(int id, String city, int countryId) {
         this.id = id;
         this.city = city;
-        this.country_id = country_id;
+        this.countryId = countryId;
     }
 
     public int getId() {
@@ -30,12 +35,12 @@ public class City {
         this.city = city;
     }
 
-    public int getCountry_id() {
-        return country_id;
+    public int getCountryId() {
+        return countryId;
     }
 
-    public void setCountry_id(int country_id) {
-        this.country_id = country_id;
+    public void setCountryId(int countryId) {
+        this.countryId = countryId;
     }
 
     @Override
@@ -43,7 +48,7 @@ public class City {
         return "City{" +
                 "id=" + id +
                 ", city='" + city + '\'' +
-                ", country_id=" + country_id +
+                ", country id=" + countryId +
                 '}';
     }
 }

@@ -1,4 +1,4 @@
-package com.solvd.it_company.sax_task;
+package com.solvd.it_company.saxTask;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

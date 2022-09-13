@@ -7,6 +7,10 @@ public class Positions {
     public Positions() {
     }
 
+    public Positions(String position) {
+        this.position = position;
+    }
+
     public Positions(int id, String position) {
         this.id = id;
         this.position = position;

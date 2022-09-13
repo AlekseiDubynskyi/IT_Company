@@ -2,18 +2,24 @@ package com.solvd.it_company.models;
 
 public class Customers {
     private int id;
-    private String customer_name;
-    private int customer_type_id;
-    private int customer_contact_id;
+    private String customerName;
+    private int customerTypeId;
+    private int customerContactId;
 
     public Customers() {
     }
 
-    public Customers(int id, String customer_name, int customer_type_id, int customer_contact_id) {
+    public Customers(String customerName, int customerTypeId, int customerContactId) {
+        this.customerName = customerName;
+        this.customerTypeId = customerTypeId;
+        this.customerContactId = customerContactId;
+    }
+
+    public Customers(int id, String customerName, int customerTypeId, int customerContactId) {
         this.id = id;
-        this.customer_name = customer_name;
-        this.customer_type_id = customer_type_id;
-        this.customer_contact_id = customer_contact_id;
+        this.customerName = customerName;
+        this.customerTypeId = customerTypeId;
+        this.customerContactId = customerContactId;
     }
 
     public int getId() {
@@ -24,37 +30,37 @@ public class Customers {
         this.id = id;
     }
 
-    public String getCustomer_name() {
-        return customer_name;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setCustomer_name(String customer_name) {
-        this.customer_name = customer_name;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
-    public int getCustomer_type_id() {
-        return customer_type_id;
+    public int getCustomerTypeId() {
+        return customerTypeId;
     }
 
-    public void setCustomer_type_id(int customer_type_id) {
-        this.customer_type_id = customer_type_id;
+    public void setCustomerTypeId(int customerTypeId) {
+        this.customerTypeId = customerTypeId;
     }
 
-    public int getCustomer_contact_id() {
-        return customer_contact_id;
+    public int getCustomerContactId() {
+        return customerContactId;
     }
 
-    public void setCustomer_contact_id(int customer_contact_id) {
-        this.customer_contact_id = customer_contact_id;
+    public void setCustomerContactId(int customerContactId) {
+        this.customerContactId = customerContactId;
     }
 
     @Override
     public String toString() {
         return "Customers{" +
                 "id=" + id +
-                ", customer_name='" + customer_name + '\'' +
-                ", customer_type_id=" + customer_type_id +
-                ", customer_contact_id=" + customer_contact_id +
+                ", customer name='" + customerName + '\'' +
+                ", customer type id=" + customerTypeId +
+                ", customer contact id=" + customerContactId +
                 '}';
     }
 }

@@ -9,7 +9,7 @@ public interface IServicesDAO {
 
     List<Services> getAllServices();
 
-    void addService(int id, String service_name, String lead_time);
+    void addService(Services services);
 
     void updateService(Services services);
 

@@ -9,7 +9,7 @@ public interface ICountryDAO {
 
     List<Country> getAllCountries();
 
-    void addCountry(int id, String country);
+    void addCountry(Country country);
 
     void updateCountry(Country country);
 

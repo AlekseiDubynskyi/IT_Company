@@ -12,7 +12,6 @@ import java.util.List;
 
 public class CategoriesDAO implements ICategoriesDAO {
     private static final Logger LOGGER = LogManager.getLogger(CategoriesDAO.class);
-    List<Categories> categories = new LinkedList<>();
 
     @Override
     public Categories getCategoryById(int id) {
@@ -29,21 +28,9 @@ public class CategoriesDAO implements ICategoriesDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (statement != null) statement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(resultSet);
+            ConnectionUtil.close(statement);
+            ConnectionUtil.close(connection);
         }
         return null;
     }
@@ -51,12 +38,13 @@ public class CategoriesDAO implements ICategoriesDAO {
     private Categories getCategoryById(ResultSet resultSet) throws SQLException {
         Categories newCategory = new Categories();
         newCategory.setId(resultSet.getInt("id"));
-        newCategory.setCategory_name(resultSet.getString("category_name"));
+        newCategory.setCategoryName(resultSet.getString("category_name"));
         return newCategory;
     }
 
     @Override
     public List<Categories> getAllCategories() {
+        List<Categories> categories = new LinkedList<>();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Connection connection = ConnectionUtil.getConnection();
@@ -69,49 +57,29 @@ public class CategoriesDAO implements ICategoriesDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (resultSet != null) resultSet.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(resultSet);
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
         return categories;
     }
 
     @Override
-    public void addCategory(int id, String category_name) {
+    public void addCategory(Categories categories) {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
             preparedStatement = connection.prepareStatement("INSERT INTO Categories VALUE(default, ?)");
-            preparedStatement.setString(1, category_name);
+            preparedStatement.setString(1, categories.getCategoryName());
             if (preparedStatement.executeUpdate() == 1) {
                 LOGGER.info("Insertion is successful.");
             } else
                 LOGGER.info("Insertion was failed.");
         } catch (SQLException e) {
-            e.getMessage();
+            LOGGER.info(e.getMessage());
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
     }
 
@@ -121,25 +89,17 @@ public class CategoriesDAO implements ICategoriesDAO {
         Connection connection = ConnectionUtil.getConnection();
         try {
             preparedStatement = connection.prepareStatement("UPDATE Categories SET category_name = ? WHERE id = ?");
-            preparedStatement.setString(1, categories.getCategory_name());
+            preparedStatement.setString(1, categories.getCategoryName());
             preparedStatement.setInt(2, categories.getId());
             if (preparedStatement.executeUpdate() == 1) {
-                LOGGER.info("Update process is successful: " + categories.getId() + " - " + categories.getCategory_name());
+                LOGGER.info("Update process is successful: " + categories.getId() + " - " + categories.getCategoryName());
             } else
-                LOGGER.info("Update process was failed: " + categories.getId() + " - " + categories.getCategory_name());
+                LOGGER.info("Update process was failed: " + categories.getId() + " - " + categories.getCategoryName());
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
     }
 
@@ -156,16 +116,8 @@ public class CategoriesDAO implements ICategoriesDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
     }
 }

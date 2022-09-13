@@ -12,7 +12,6 @@ import java.util.List;
 
 public class ServicesDAO implements IServicesDAO {
     private static final Logger LOGGER = LogManager.getLogger(ServicesDAO.class);
-    List<Services> services = new LinkedList<>();
 
     @Override
     public Services getServiceById(int id) {
@@ -29,35 +28,24 @@ public class ServicesDAO implements IServicesDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (statement != null) statement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(resultSet);
+            ConnectionUtil.close(statement);
+            ConnectionUtil.close(connection);
         }
         return null;
     }
 
-    private Services getServiceById(ResultSet resultSet) throws SQLException{
+    private Services getServiceById(ResultSet resultSet) throws SQLException {
         Services newService = new Services();
         newService.setId(resultSet.getInt("id"));
-        newService.setService_name(resultSet.getString("service_name"));
-        newService.setLead_time(resultSet.getString("lead_time"));
+        newService.setServiceName(resultSet.getString("service_name"));
+        newService.setLeadTime(resultSet.getString("lead_time"));
         return newService;
     }
 
     @Override
     public List<Services> getAllServices() {
+        List<Services> services = new LinkedList<>();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Connection connection = ConnectionUtil.getConnection();
@@ -70,50 +58,30 @@ public class ServicesDAO implements IServicesDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (resultSet != null) resultSet.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(resultSet);
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
         return services;
     }
 
     @Override
-    public void addService(int id, String service_name, String lead_time) {
+    public void addService(Services services) {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
             preparedStatement = connection.prepareStatement("INSERT INTO Services VALUE(default, ?, ?)");
-            preparedStatement.setString(1, service_name);
-            preparedStatement.setString(2,lead_time);
+            preparedStatement.setString(1, services.getServiceName());
+            preparedStatement.setString(2, services.getServiceName());
             if (preparedStatement.executeUpdate() == 1) {
                 LOGGER.info("Insertion is successful.");
             } else
                 LOGGER.info("Insertion was failed.");
         } catch (SQLException e) {
-            e.getMessage();
+            LOGGER.info(e.getMessage());
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
     }
 
@@ -124,26 +92,18 @@ public class ServicesDAO implements IServicesDAO {
         try {
             preparedStatement = connection.prepareStatement("UPDATE Services SET service_name=?, " +
                     "lead_time=? WHERE id=?");
-            preparedStatement.setString(1, services.getService_name());
-            preparedStatement.setString(2, services.getLead_time());
+            preparedStatement.setString(1, services.getServiceName());
+            preparedStatement.setString(2, services.getLeadTime());
             preparedStatement.setInt(3, services.getId());
             if (preparedStatement.executeUpdate() == 1) {
-                LOGGER.info("Update process is successful: " + services.getId() + " - " + services.getService_name() + " " + services.getLead_time());
+                LOGGER.info("Update process is successful: " + services.getId() + " - " + services.getServiceName() + " " + services.getLeadTime());
             } else
-                LOGGER.info("Update process was failed: " + services.getId() + " - " + services.getService_name() + " " + services.getLead_time());
+                LOGGER.info("Update process was failed: " + services.getId() + " - " + services.getServiceName() + " " + services.getLeadTime());
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
     }
 
@@ -160,16 +120,8 @@ public class ServicesDAO implements IServicesDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
     }
 }

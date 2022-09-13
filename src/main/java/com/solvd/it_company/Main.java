@@ -27,7 +27,7 @@ public class Main {
         List<Country> countries = countryDAO.getAllCountries();
         countries.forEach(LOGGER::info);
 
-        countryDAO.addCountry(8, "Germany");
+        countryDAO.addCountry(new Country("Germany"));
 
         countryDAO.getCountryById(12);
 
@@ -37,6 +37,7 @@ public class Main {
 
         countryDAO.deleteCountry(8);
 
+        countries = countryDAO.getAllCountries();
         countries.forEach(LOGGER::info);
     }
 }

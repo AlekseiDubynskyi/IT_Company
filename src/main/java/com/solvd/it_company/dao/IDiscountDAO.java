@@ -9,7 +9,7 @@ public interface IDiscountDAO {
 
     List<Discount> getAllDiscounts();
 
-    void addDiscount(int id, String discount_name, boolean discount_success);
+    void addDiscount(Discount discount);
 
     void updateDiscount(Discount discount);
 

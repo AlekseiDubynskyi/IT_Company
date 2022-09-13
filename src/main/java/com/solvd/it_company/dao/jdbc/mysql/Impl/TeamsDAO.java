@@ -2,7 +2,6 @@ package com.solvd.it_company.dao.jdbc.mysql.Impl;
 
 import com.solvd.it_company.connection.ConnectionUtil;
 import com.solvd.it_company.dao.ITeamsDAO;
-import com.solvd.it_company.models.Positions;
 import com.solvd.it_company.models.Teams;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +12,6 @@ import java.util.List;
 
 public class TeamsDAO implements ITeamsDAO {
     private static final Logger LOGGER = LogManager.getLogger(TeamsDAO.class);
-    List<Teams> teams = new LinkedList<>();
 
     @Override
     public Teams getTeamById(int id) {
@@ -30,21 +28,9 @@ public class TeamsDAO implements ITeamsDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (statement != null) statement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(resultSet);
+            ConnectionUtil.close(statement);
+            ConnectionUtil.close(connection);
         }
         return null;
     }
@@ -52,12 +38,13 @@ public class TeamsDAO implements ITeamsDAO {
     private Teams getTeamById(ResultSet resultSet) throws SQLException {
         Teams newTeam = new Teams();
         newTeam.setId(resultSet.getInt("id"));
-        newTeam.setTeam_name(resultSet.getString("team_name"));
+        newTeam.setTeamName(resultSet.getString("team_name"));
         return newTeam;
     }
 
     @Override
     public List<Teams> getAllTeams() {
+        List<Teams> teams = new LinkedList<>();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Connection connection = ConnectionUtil.getConnection();
@@ -70,49 +57,29 @@ public class TeamsDAO implements ITeamsDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (resultSet != null) resultSet.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(resultSet);
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
         return teams;
     }
 
     @Override
-    public void addTeam(int id, String team_name) {
+    public void addTeam(Teams teams) {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
             preparedStatement = connection.prepareStatement("INSERT INTO Teams VALUE(default, ?)");
-            preparedStatement.setString(1, team_name);
+            preparedStatement.setString(1, teams.getTeamName());
             if (preparedStatement.executeUpdate() == 1) {
                 LOGGER.info("Insertion is successful.");
             } else
                 LOGGER.info("Insertion was failed.");
         } catch (SQLException e) {
-            e.getMessage();
+            LOGGER.info(e.getMessage());
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
     }
 
@@ -122,25 +89,17 @@ public class TeamsDAO implements ITeamsDAO {
         Connection connection = ConnectionUtil.getConnection();
         try {
             preparedStatement = connection.prepareStatement("UPDATE Teams SET team_name=? WHERE id=?");
-            preparedStatement.setString(1, teams.getTeam_name());
+            preparedStatement.setString(1, teams.getTeamName());
             preparedStatement.setInt(2, teams.getId());
             if (preparedStatement.executeUpdate() == 1) {
-                LOGGER.info("Update process is successful: " + teams.getId() + " - " + teams.getTeam_name());
+                LOGGER.info("Update process is successful: " + teams.getId() + " - " + teams.getTeamName());
             } else
-                LOGGER.info("Update process was failed: " + teams.getId() + " - " + teams.getTeam_name());
+                LOGGER.info("Update process was failed: " + teams.getId() + " - " + teams.getTeamName());
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
     }
 
@@ -157,16 +116,8 @@ public class TeamsDAO implements ITeamsDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
     }
 }

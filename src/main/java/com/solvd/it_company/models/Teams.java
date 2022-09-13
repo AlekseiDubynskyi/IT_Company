@@ -2,14 +2,18 @@ package com.solvd.it_company.models;
 
 public class Teams {
     private int id;
-    private String team_name;
+    private String teamName;
 
     public Teams() {
     }
 
-    public Teams(int id, String team_name) {
+    public Teams(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public Teams(int id, String teamName) {
         this.id = id;
-        this.team_name = team_name;
+        this.teamName = teamName;
     }
 
     public int getId() {
@@ -20,19 +24,19 @@ public class Teams {
         this.id = id;
     }
 
-    public String getTeam_name() {
-        return team_name;
+    public String getTeamName() {
+        return teamName;
     }
 
-    public void setTeam_name(String team_name) {
-        this.team_name = team_name;
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 
     @Override
     public String toString() {
         return "Teams{" +
                 "id=" + id +
-                ", team_name='" + team_name + '\'' +
+                ", team_name='" + teamName + '\'' +
                 '}';
     }
 }

@@ -12,7 +12,6 @@ import java.util.List;
 
 public class EmployeesDAO implements IEmployeesDAO {
     private static final Logger LOGGER = LogManager.getLogger(EmployeesDAO.class);
-    List<Employees> employees = new LinkedList<>();
 
     @Override
     public Employees getEmployeeById(int id) {
@@ -29,21 +28,9 @@ public class EmployeesDAO implements IEmployeesDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (statement != null) statement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(resultSet);
+            ConnectionUtil.close(statement);
+            ConnectionUtil.close(connection);
         }
         return null;
     }
@@ -51,17 +38,18 @@ public class EmployeesDAO implements IEmployeesDAO {
     private Employees getEmployeeById(ResultSet resultSet) throws SQLException {
         Employees newEmployee = new Employees();
         newEmployee.setId(resultSet.getInt("id"));
-        newEmployee.setFirst_name(resultSet.getString("first_name"));
-        newEmployee.setLast_name(resultSet.getString("last_name"));
-        newEmployee.setPosition_id(resultSet.getInt("position_id"));
-        newEmployee.setContact_id(resultSet.getInt("contact_id"));
-        newEmployee.setTeam_id(resultSet.getInt("team_id"));
+        newEmployee.setFirstName(resultSet.getString("first_name"));
+        newEmployee.setLastName(resultSet.getString("last_name"));
+        newEmployee.setPositionId(resultSet.getInt("position_id"));
+        newEmployee.setContactId(resultSet.getInt("contact_id"));
+        newEmployee.setTeamId(resultSet.getInt("team_id"));
         return newEmployee;
     }
 
 
     @Override
     public List<Employees> getAllEmployees() {
+        List<Employees> employees = new LinkedList<>();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Connection connection = ConnectionUtil.getConnection();
@@ -74,53 +62,33 @@ public class EmployeesDAO implements IEmployeesDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (resultSet != null) resultSet.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(resultSet);
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
         return employees;
     }
 
     @Override
-    public void addEmployee(int id, String first_name, String last_name, int position_id, int contact_id, int team_id) {
+    public void addEmployee(Employees employees) {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
             preparedStatement = connection.prepareStatement("INSERT INTO Employees VALUE(default, ?, ?, ?, ?, ?)");
-            preparedStatement.setString(1, first_name);
-            preparedStatement.setString(2, last_name);
-            preparedStatement.setInt(3, position_id);
-            preparedStatement.setInt(4, contact_id);
-            preparedStatement.setInt(5, team_id);
+            preparedStatement.setString(1, employees.getFirstName());
+            preparedStatement.setString(2, employees.getLastName());
+            preparedStatement.setInt(3, employees.getPositionId());
+            preparedStatement.setInt(4, employees.getContactId());
+            preparedStatement.setInt(5, employees.getTeamId());
             if (preparedStatement.executeUpdate() == 1) {
                 LOGGER.info("Insertion is successful.");
             } else
                 LOGGER.info("Insertion was failed.");
         } catch (SQLException e) {
-            e.getMessage();
+            LOGGER.info(e.getMessage());
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
     }
 
@@ -131,29 +99,21 @@ public class EmployeesDAO implements IEmployeesDAO {
         try {
             preparedStatement = connection.prepareStatement("UPDATE Employees SET first_name=?, " +
                     "last_name=?, position_id=?, contact_id=?, team_id=? WHERE id=?");
-            preparedStatement.setString(1, employees.getFirst_name());
-            preparedStatement.setString(2, employees.getLast_name());
-            preparedStatement.setInt(3, employees.getPosition_id());
-            preparedStatement.setInt(4, employees.getContact_id());
-            preparedStatement.setInt(5, employees.getTeam_id());
+            preparedStatement.setString(1, employees.getFirstName());
+            preparedStatement.setString(2, employees.getLastName());
+            preparedStatement.setInt(3, employees.getPositionId());
+            preparedStatement.setInt(4, employees.getContactId());
+            preparedStatement.setInt(5, employees.getTeamId());
             preparedStatement.setInt(6, employees.getId());
             if (preparedStatement.executeUpdate() == 1) {
-                LOGGER.info("Update process is successful: " + employees.getId() + " - " + employees.getFirst_name() + " " + employees.getLast_name());
+                LOGGER.info("Update process is successful: " + employees.getId() + " - " + employees.getFirstName() + " " + employees.getLastName());
             } else
-                LOGGER.info("Update process was failed: " + employees.getId() + " - " + employees.getFirst_name() + " " + employees.getLast_name());
+                LOGGER.info("Update process was failed: " + employees.getId() + " - " + employees.getFirstName() + " " + employees.getLastName());
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
     }
 
@@ -170,16 +130,8 @@ public class EmployeesDAO implements IEmployeesDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
     }
 }

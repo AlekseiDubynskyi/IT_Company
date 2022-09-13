@@ -12,7 +12,6 @@ import java.util.List;
 
 public class AddressesDAO implements IAddressesDAO {
     private static final Logger LOGGER = LogManager.getLogger(AddressesDAO.class);
-    List<Addresses> addresses = new LinkedList<>();
 
     @Override
     public Addresses getAddressById(int id) {
@@ -29,21 +28,9 @@ public class AddressesDAO implements IAddressesDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (statement != null) statement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(resultSet);
+            ConnectionUtil.close(statement);
+            ConnectionUtil.close(connection);
         }
         return null;
     }
@@ -53,13 +40,14 @@ public class AddressesDAO implements IAddressesDAO {
         newAddress.setId(resultSet.getInt("id"));
         newAddress.setAddress(resultSet.getString("address"));
         newAddress.setDistrict(resultSet.getString("district"));
-        newAddress.setPostal_code(resultSet.getString("postal_code"));
-        newAddress.setCity_id(resultSet.getInt("city_id"));
+        newAddress.setPostalCode(resultSet.getString("postal_code"));
+        newAddress.setCityId(resultSet.getInt("city_id"));
         return newAddress;
     }
 
     @Override
     public List<Addresses> getAllAddresses() {
+        List<Addresses> addresses = new LinkedList<>();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Connection connection = ConnectionUtil.getConnection();
@@ -72,52 +60,32 @@ public class AddressesDAO implements IAddressesDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (resultSet != null) resultSet.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(resultSet);
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
         return addresses;
     }
 
     @Override
-    public void addAddress(int id, String address, String district, String postal_code, int city_id) {
+    public void addAddress(Addresses addresses) {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
             preparedStatement = connection.prepareStatement("INSERT INTO Addresses VALUE(default, ?, ?, ?, ?)");
-            preparedStatement.setString(1, address);
-            preparedStatement.setString(2, district);
-            preparedStatement.setString(3, postal_code);
-            preparedStatement.setInt(4, city_id);
+            preparedStatement.setString(1, addresses.getAddress());
+            preparedStatement.setString(2, addresses.getDistrict());
+            preparedStatement.setString(3, addresses.getPostalCode());
+            preparedStatement.setInt(4, addresses.getCityId());
             if (preparedStatement.executeUpdate() == 1) {
                 LOGGER.info("Insertion is successful.");
             } else
                 LOGGER.info("Insertion was failed.");
         } catch (SQLException e) {
-            e.getMessage();
+            LOGGER.info(e.getMessage());
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
     }
 
@@ -130,8 +98,8 @@ public class AddressesDAO implements IAddressesDAO {
                     "postal_code=?, city_id=? WHERE id=?");
             preparedStatement.setString(1, addresses.getAddress());
             preparedStatement.setString(2, addresses.getDistrict());
-            preparedStatement.setString(3, addresses.getPostal_code());
-            preparedStatement.setInt(4, addresses.getCity_id());
+            preparedStatement.setString(3, addresses.getPostalCode());
+            preparedStatement.setInt(4, addresses.getCityId());
             preparedStatement.setInt(5, addresses.getId());
             if (preparedStatement.executeUpdate() == 1) {
                 LOGGER.info("Update process is successful: " + addresses.getId() + " - " + addresses.getAddress());
@@ -140,16 +108,8 @@ public class AddressesDAO implements IAddressesDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
     }
 
@@ -166,16 +126,8 @@ public class AddressesDAO implements IAddressesDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
     }
 }

@@ -9,7 +9,7 @@ public interface ICategoriesDAO {
 
     List<Categories> getAllCategories();
 
-    void addCategory(int id, String category_name);
+    void addCategory(Categories categories);
 
     void updateCategory(Categories categories);
 

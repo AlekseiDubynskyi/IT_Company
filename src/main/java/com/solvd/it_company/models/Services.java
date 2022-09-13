@@ -2,16 +2,21 @@ package com.solvd.it_company.models;
 
 public class Services {
     private int id;
-    private String service_name;
-    private String lead_time;
+    private String serviceName;
+    private String leadTime;
 
     public Services() {
     }
 
-    public Services(int id, String service_name, String lead_time) {
+    public Services(String serviceName, String leadTime) {
+        this.serviceName = serviceName;
+        this.leadTime = leadTime;
+    }
+
+    public Services(int id, String serviceName, String leadTime) {
         this.id = id;
-        this.service_name = service_name;
-        this.lead_time = lead_time;
+        this.serviceName = serviceName;
+        this.leadTime = leadTime;
     }
 
     public int getId() {
@@ -22,28 +27,28 @@ public class Services {
         this.id = id;
     }
 
-    public String getService_name() {
-        return service_name;
+    public String getServiceName() {
+        return serviceName;
     }
 
-    public void setService_name(String service_name) {
-        this.service_name = service_name;
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
     }
 
-    public String getLead_time() {
-        return lead_time;
+    public String getLeadTime() {
+        return leadTime;
     }
 
-    public void setLead_time(String lead_time) {
-        this.lead_time = lead_time;
+    public void setLeadTime(String leadTime) {
+        this.leadTime = leadTime;
     }
 
     @Override
     public String toString() {
         return "Services{" +
                 "id=" + id +
-                ", service_name='" + service_name + '\'' +
-                ", lead_time='" + lead_time + '\'' +
+                ", service_name='" + serviceName + '\'' +
+                ", lead_time='" + leadTime + '\'' +
                 '}';
     }
 }

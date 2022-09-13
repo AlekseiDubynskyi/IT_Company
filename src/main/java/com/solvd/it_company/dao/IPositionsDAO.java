@@ -9,7 +9,7 @@ public interface IPositionsDAO {
 
     List<Positions> getAllPositions();
 
-    void addPosition(int id, String position);
+    void addPosition(Positions positions);
 
     void updatePosition(Positions positions);
 

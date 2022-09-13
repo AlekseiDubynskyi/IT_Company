@@ -2,22 +2,30 @@ package com.solvd.it_company.models;
 
 public class Employees {
     private int id;
-    private String first_name;
-    private String last_name;
-    private int position_id;
-    private int contact_id;
-    private int team_id;
+    private String firstName;
+    private String lastName;
+    private int positionId;
+    private int contactId;
+    private int teamId;
 
     public Employees() {
     }
 
-    public Employees(int id, String first_name, String last_name, int position_id, int contact_id, int team_id) {
+    public Employees(String firstName, String lastName, int positionId, int contactId, int teamId) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.positionId = positionId;
+        this.contactId = contactId;
+        this.teamId = teamId;
+    }
+
+    public Employees(int id, String firstName, String lastName, int positionId, int contactId, int teamId) {
         this.id = id;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.position_id = position_id;
-        this.contact_id = contact_id;
-        this.team_id = team_id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.positionId = positionId;
+        this.contactId = contactId;
+        this.teamId = teamId;
     }
 
     public int getId() {
@@ -28,55 +36,55 @@ public class Employees {
         this.id = id;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public int getPosition_id() {
-        return position_id;
+    public int getPositionId() {
+        return positionId;
     }
 
-    public void setPosition_id(int position_id) {
-        this.position_id = position_id;
+    public void setPositionId(int positionId) {
+        this.positionId = positionId;
     }
 
-    public int getContact_id() {
-        return contact_id;
+    public int getContactId() {
+        return contactId;
     }
 
-    public void setContact_id(int contact_id) {
-        this.contact_id = contact_id;
+    public void setContactId(int contactId) {
+        this.contactId = contactId;
     }
 
-    public int getTeam_id() {
-        return team_id;
+    public int getTeamId() {
+        return teamId;
     }
 
-    public void setTeam_id(int team_id) {
-        this.team_id = team_id;
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
     }
 
     @Override
     public String toString() {
         return "Employees{" +
                 "id=" + id +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
-                ", position_id=" + position_id +
-                ", contact_id=" + contact_id +
-                ", team_id=" + team_id +
+                ", first name='" + firstName + '\'' +
+                ", last name='" + lastName + '\'' +
+                ", position id=" + positionId +
+                ", contact id=" + contactId +
+                ", team id=" + teamId +
                 '}';
     }
 }

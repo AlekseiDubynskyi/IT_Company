@@ -1,8 +1,8 @@
 package com.solvd.it_company.dao.jdbc.mysql.Impl;
 
 import com.solvd.it_company.connection.ConnectionUtil;
-import com.solvd.it_company.dao.ICityDAO;
-import com.solvd.it_company.models.City;
+import com.solvd.it_company.dao.IServiceCategoryDAO;
+import com.solvd.it_company.models.ServiceCategory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,20 +10,20 @@ import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CityDAO implements ICityDAO {
-    private static final Logger LOGGER = LogManager.getLogger(CityDAO.class);
+public class ServiceCategoryDAO implements IServiceCategoryDAO {
+    private static final Logger LOGGER = LogManager.getLogger(ServiceCategoryDAO.class);
 
     @Override
-    public City getCityById(int id) {
+    public ServiceCategory getServiceCategoryById(int id) {
         ResultSet resultSet = null;
         Statement statement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
             statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM City WHERE id=" + id);
+            resultSet = statement.executeQuery("SELECT * FROM Service_category WHERE id=" + id);
             if (resultSet.next()) {
-                LOGGER.info(getCityById(resultSet));
-                return getCityById(resultSet);
+                LOGGER.info(getServiceCategoryById(resultSet));
+                return getServiceCategoryById(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -35,25 +35,25 @@ public class CityDAO implements ICityDAO {
         return null;
     }
 
-    private City getCityById(ResultSet resultSet) throws SQLException {
-        City newCity = new City();
-        newCity.setId(resultSet.getInt("id"));
-        newCity.setCity(resultSet.getString("city"));
-        newCity.setCountryId(resultSet.getInt("country_id"));
-        return newCity;
+    private ServiceCategory getServiceCategoryById(ResultSet resultSet) throws SQLException {
+        ServiceCategory newServiceCategory = new ServiceCategory();
+        newServiceCategory.setId(resultSet.getInt("id"));
+        newServiceCategory.setServiceId(resultSet.getInt("service_id"));
+        newServiceCategory.setCategoryId(resultSet.getInt("category_id"));
+        return newServiceCategory;
     }
 
     @Override
-    public List<City> getAllCities() {
-        List<City> cities = new LinkedList<>();
+    public List<ServiceCategory> getAllServiceCategories() {
+        List<ServiceCategory> serviceCategories = new LinkedList<>();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM City");
+            preparedStatement = connection.prepareStatement("SELECT * FROM Service_category");
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                cities.add(getCityById(resultSet));
+                serviceCategories.add(getServiceCategoryById(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,17 +62,17 @@ public class CityDAO implements ICityDAO {
             ConnectionUtil.close(preparedStatement);
             ConnectionUtil.close(connection);
         }
-        return cities;
+        return serviceCategories;
     }
 
     @Override
-    public void addCity(City city) {
+    public void addServiceCategory(ServiceCategory serviceCategory) {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO City VALUE(default, ?, ?)");
-            preparedStatement.setString(1, city.getCity());
-            preparedStatement.setInt(2, city.getCountryId());
+            preparedStatement = connection.prepareStatement("INSERT INTO Service_category VALUE(default, ?, ?)");
+            preparedStatement.setInt(1, serviceCategory.getServiceId());
+            preparedStatement.setInt(2, serviceCategory.getCategoryId());
             if (preparedStatement.executeUpdate() == 1) {
                 LOGGER.info("Insertion is successful.");
             } else
@@ -86,18 +86,18 @@ public class CityDAO implements ICityDAO {
     }
 
     @Override
-    public void updateCity(City city) {
+    public void updateServiceCategory(ServiceCategory serviceCategory) {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            preparedStatement = connection.prepareStatement("UPDATE City SET city=?, country_id=? WHERE id=?");
-            preparedStatement.setString(1, city.getCity());
-            preparedStatement.setInt(2, city.getCountryId());
-            preparedStatement.setInt(3, city.getId());
+            preparedStatement = connection.prepareStatement("UPDATE Service_category SET service_id=?, category_id=? WHERE id=?");
+            preparedStatement.setInt(1, serviceCategory.getServiceId());
+            preparedStatement.setInt(2, serviceCategory.getCategoryId());
+            preparedStatement.setInt(3, serviceCategory.getId());
             if (preparedStatement.executeUpdate() == 1) {
-                LOGGER.info("Update process is successful: " + city.getId() + " - " + city.getCity());
+                LOGGER.info("Update process is successful: " + serviceCategory.getId() + " - " + serviceCategory.getServiceId() + serviceCategory.getCategoryId());
             } else
-                LOGGER.info("Update process was failed: " + city.getId() + " - " + city.getCity());
+                LOGGER.info("Update process was failed: " + serviceCategory.getId() + " - " + serviceCategory.getServiceId() + serviceCategory.getCategoryId());
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -107,11 +107,11 @@ public class CityDAO implements ICityDAO {
     }
 
     @Override
-    public void deleteCity(int id) {
+    public void deleteServiceCategory(int id) {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            preparedStatement = connection.prepareStatement("DELETE FROM City WHERE id=" + id);
+            preparedStatement = connection.prepareStatement("DELETE FROM Service_category WHERE id=" + id);
             if (preparedStatement.executeUpdate() == 1) {
                 LOGGER.info("Delete process is successful.");
             } else

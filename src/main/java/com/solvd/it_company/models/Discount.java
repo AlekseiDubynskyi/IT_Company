@@ -2,16 +2,21 @@ package com.solvd.it_company.models;
 
 public class Discount {
     private int id;
-    private String discount_name;
-    private boolean discount_success;
+    private String discountName;
+    private boolean discountSuccess;
 
     public Discount() {
     }
 
-    public Discount(int id, String discount_name, boolean discount_success) {
+    public Discount(String discountName, boolean discountSuccess) {
+        this.discountName = discountName;
+        this.discountSuccess = discountSuccess;
+    }
+
+    public Discount(int id, String discountName, boolean discountSuccess) {
         this.id = id;
-        this.discount_name = discount_name;
-        this.discount_success = discount_success;
+        this.discountName = discountName;
+        this.discountSuccess = discountSuccess;
     }
 
     public int getId() {
@@ -22,28 +27,28 @@ public class Discount {
         this.id = id;
     }
 
-    public String getDiscount_name() {
-        return discount_name;
+    public String getDiscountName() {
+        return discountName;
     }
 
-    public void setDiscount_name(String discount_name) {
-        this.discount_name = discount_name;
+    public void setDiscountName(String discountName) {
+        this.discountName = discountName;
     }
 
-    public boolean isDiscount_success() {
-        return discount_success;
+    public boolean getDiscountSuccess() {
+        return discountSuccess;
     }
 
-    public void setDiscount_success(boolean discount_success) {
-        this.discount_success = discount_success;
+    public void setDiscountSuccess(boolean discountSuccess) {
+        this.discountSuccess = discountSuccess;
     }
 
     @Override
     public String toString() {
         return "Discount{" +
                 "id=" + id +
-                ", discount_name='" + discount_name + '\'' +
-                ", discount_success=" + discount_success +
+                ", discount name='" + discountName + '\'' +
+                ", discount success=" + discountSuccess +
                 '}';
     }
 }

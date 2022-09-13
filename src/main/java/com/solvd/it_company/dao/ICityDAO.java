@@ -9,7 +9,7 @@ public interface ICityDAO {
 
     List<City> getAllCities();
 
-    void addCity(int id, String city, int country_id);
+    void addCity(City city);
 
     void updateCity(City city);
 

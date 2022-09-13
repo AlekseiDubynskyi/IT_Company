@@ -4,18 +4,25 @@ public class Addresses {
     private int id;
     private String address;
     private String district;
-    private String postal_code;
-    private int city_id;
+    private String postalCode;
+    private int cityId;
 
     public Addresses() {
     }
 
-    public Addresses(int id, String address, String district, String postal_code, int city_id) {
+    public Addresses(String address, String district, String postalCode, int cityId) {
+        this.address = address;
+        this.district = district;
+        this.postalCode = postalCode;
+        this.cityId = cityId;
+    }
+
+    public Addresses(int id, String address, String district, String postalCode, int cityId) {
         this.id = id;
         this.address = address;
         this.district = district;
-        this.postal_code = postal_code;
-        this.city_id = city_id;
+        this.postalCode = postalCode;
+        this.cityId = cityId;
     }
 
     public int getId() {
@@ -42,20 +49,20 @@ public class Addresses {
         this.district = district;
     }
 
-    public String getPostal_code() {
-        return postal_code;
+    public String getPostalCode() {
+        return postalCode;
     }
 
-    public void setPostal_code(String postal_code) {
-        this.postal_code = postal_code;
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
-    public int getCity_id() {
-        return city_id;
+    public int getCityId() {
+        return cityId;
     }
 
-    public void setCity_id(int city_id) {
-        this.city_id = city_id;
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
     }
 
     @Override
@@ -64,8 +71,8 @@ public class Addresses {
                 "id=" + id +
                 ", address='" + address + '\'' +
                 ", district='" + district + '\'' +
-                ", postal_code='" + postal_code + '\'' +
-                ", city_id=" + city_id +
+                ", postal code='" + postalCode + '\'' +
+                ", city id=" + cityId +
                 '}';
     }
 }

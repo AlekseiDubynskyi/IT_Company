@@ -1,10 +1,10 @@
-package com.solvd.it_company.sax_task;
+package com.solvd.it_company.saxTask;
 
 public class AddressesSAX {
     private int id;
     private String street;
     private String district;
-    private String postal_code;
+    private String postalCode;
     private String city;
 
     public int getId() {
@@ -31,12 +31,12 @@ public class AddressesSAX {
         this.district = district;
     }
 
-    public String getPostal_code() {
-        return postal_code;
+    public String getPostalCode() {
+        return postalCode;
     }
 
-    public void setPostal_code(String postal_code) {
-        this.postal_code = postal_code;
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
     public String getCity() {
@@ -53,7 +53,7 @@ public class AddressesSAX {
                 "id=" + id +
                 ", street='" + street + '\'' +
                 ", district='" + district + '\'' +
-                ", postal_code='" + postal_code + '\'' +
+                ", postal code='" + postalCode + '\'' +
                 ", city='" + city + '\'' +
                 '}';
     }

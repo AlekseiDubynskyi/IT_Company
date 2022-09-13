@@ -9,7 +9,7 @@ public interface ITeamsDAO {
 
     List<Teams> getAllTeams();
 
-    void addTeam(int id, String team_name);
+    void addTeam(Teams teams);
 
     void updateTeam(Teams teams);
 

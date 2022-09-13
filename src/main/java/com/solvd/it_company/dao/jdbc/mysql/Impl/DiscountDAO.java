@@ -12,7 +12,6 @@ import java.util.List;
 
 public class DiscountDAO implements IDiscountDAO {
     private static final Logger LOGGER = LogManager.getLogger(DiscountDAO.class);
-    List<Discount> discounts = new LinkedList<>();
 
     @Override
     public Discount getDiscountById(int id) {
@@ -29,21 +28,9 @@ public class DiscountDAO implements IDiscountDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (statement != null) statement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(resultSet);
+            ConnectionUtil.close(statement);
+            ConnectionUtil.close(connection);
         }
         return null;
     }
@@ -51,13 +38,14 @@ public class DiscountDAO implements IDiscountDAO {
     private Discount getDiscountById(ResultSet resultSet) throws SQLException {
         Discount newDiscount = new Discount();
         newDiscount.setId(resultSet.getInt("id"));
-        newDiscount.setDiscount_name(resultSet.getString("discount_name"));
-        newDiscount.setDiscount_success(resultSet.getBoolean("discount_success"));
+        newDiscount.setDiscountName(resultSet.getString("discount_name"));
+        newDiscount.setDiscountSuccess(resultSet.getBoolean("discount_success"));
         return newDiscount;
     }
 
     @Override
     public List<Discount> getAllDiscounts() {
+        List<Discount> discounts = new LinkedList<>();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Connection connection = ConnectionUtil.getConnection();
@@ -70,50 +58,30 @@ public class DiscountDAO implements IDiscountDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (resultSet != null) resultSet.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(resultSet);
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
         return discounts;
     }
 
     @Override
-    public void addDiscount(int id, String discount_name, boolean discount_success) {
+    public void addDiscount(Discount discount) {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
             preparedStatement = connection.prepareStatement("INSERT INTO Discount VALUE(default, ?, ?)");
-            preparedStatement.setString(1, discount_name);
-            preparedStatement.setBoolean(2, discount_success);
+            preparedStatement.setString(1, discount.getDiscountName());
+            preparedStatement.setBoolean(2, discount.getDiscountSuccess());
             if (preparedStatement.executeUpdate() == 1) {
                 LOGGER.info("Insertion is successful.");
             } else
                 LOGGER.info("Insertion was failed.");
         } catch (SQLException e) {
-            e.getMessage();
+            LOGGER.info(e.getMessage());
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
     }
 
@@ -124,26 +92,18 @@ public class DiscountDAO implements IDiscountDAO {
         try {
             preparedStatement = connection.prepareStatement("UPDATE Discount SET discount_name=?, " +
                     "discount_success=? WHERE id=?");
-            preparedStatement.setString(1, discount.getDiscount_name());
-            preparedStatement.setBoolean(2, true);
+            preparedStatement.setString(1, discount.getDiscountName());
+            preparedStatement.setBoolean(2, discount.getDiscountSuccess());
             preparedStatement.setInt(3, discount.getId());
             if (preparedStatement.executeUpdate() == 1) {
-                LOGGER.info("Update process is successful: " + discount.getId() + " - " + discount.getDiscount_name());
+                LOGGER.info("Update process is successful: " + discount.getId() + " - " + discount.getDiscountName());
             } else
-                LOGGER.info("Update process was failed: " + discount.getId() + " - " + discount.getDiscount_name());
+                LOGGER.info("Update process was failed: " + discount.getId() + " - " + discount.getDiscountName());
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
     }
 
@@ -160,16 +120,8 @@ public class DiscountDAO implements IDiscountDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+            ConnectionUtil.close(preparedStatement);
+            ConnectionUtil.close(connection);
         }
     }
 }
