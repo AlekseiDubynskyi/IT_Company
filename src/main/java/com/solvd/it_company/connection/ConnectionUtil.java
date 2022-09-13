@@ -8,10 +8,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class ConnectionUtil {
-
     public static Connection getConnection() {
         Connection connection = null;
-
         try (FileInputStream f = new FileInputStream("src/main/resources/db.properties")) {
 
             Properties properties = new Properties();
