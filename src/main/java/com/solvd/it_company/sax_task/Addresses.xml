@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addresses>
+    <address id="1">
+        <street>Nezalezhnosti 22</street>
+        <district>Shevchenkivskii</district>
+        <postal_code>01213</postal_code>
+        <city>Kyiv</city>
+    </address>
+    <address id="2">
+        <street>Svobody 33</street>
+        <district>Darnytskii</district>
+        <postal_code>01411</postal_code>
+        <city>Kyiv</city>
+    </address>
+    <address id="3">
+        <street>Pravdy 48</street>
+        <district>Kharkivskii</district>
+        <postal_code>31211</postal_code>
+        <city>Kharkiv</city>
+    </address>
+    <address id="4">
+        <street>Zlotiy 11</street>
+        <district>Warsawskii</district>
+        <postal_code>04414</postal_code>
+        <city>Warsaw</city>
+    </address>
+    <address id="5">
+        <street>Korolevskii 441</street>
+        <district>Krakivskii</district>
+        <postal_code>30112</postal_code>
+        <city>Krakiv</city>
+    </address>
+    <address id="6">
+        <street>Long Street 314</street>
+        <district>Washington's 10th congressional district</district>
+        <postal_code>05515</postal_code>
+        <city>Washington</city>
+    </address>
+</addresses>
