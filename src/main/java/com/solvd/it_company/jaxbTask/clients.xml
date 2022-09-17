@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<clients>
+    <client>
+        <fullName>John Smith</fullName>
+        <phoneNumber>+49041041794</phoneNumber>
+        <email>john.smith@gmail.com</email>
+        <location>London</location>
+    </client>
+    <client>
+        <fullName>Oliver Adams</fullName>
+        <phoneNumber>+4197017907418</phoneNumber>
+        <email>oliver.adams@gmail.com</email>
+        <location>New York</location>
+    </client>
+</clients>
