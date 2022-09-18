@@ -1,5 +1,7 @@
 package com.solvd.it_company.models;
 
+import java.util.Objects;
+
 public class Employees {
     private int id;
     private String firstName;
@@ -74,6 +76,19 @@ public class Employees {
 
     public void setTeamId(int teamId) {
         this.teamId = teamId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employees employees = (Employees) o;
+        return id == employees.id && positionId == employees.positionId && contactId == employees.contactId && teamId == employees.teamId && firstName.equals(employees.firstName) && lastName.equals(employees.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, positionId, contactId, teamId);
     }
 
     @Override

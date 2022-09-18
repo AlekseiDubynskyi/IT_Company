@@ -1,6 +1,7 @@
 package com.solvd.it_company.models;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Orders {
     private int id;
@@ -109,6 +110,19 @@ public class Orders {
 
     public void setServiceCategoryId(int serviceCategoryId) {
         this.serviceCategoryId = serviceCategoryId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Orders orders = (Orders) o;
+        return id == orders.id && Double.compare(orders.price, price) == 0 && customerId == orders.customerId && teamId == orders.teamId && discountId == orders.discountId && serviceCategoryId == orders.serviceCategoryId && dateCreation.equals(orders.dateCreation) && paymentType.equals(orders.paymentType) && datePayment.equals(orders.datePayment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, price, dateCreation, paymentType, datePayment, customerId, teamId, discountId, serviceCategoryId);
     }
 
     @Override

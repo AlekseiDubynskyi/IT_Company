@@ -12,6 +12,16 @@ public class Client {
     private String email;
     private String location;
 
+    public Client() {
+    }
+
+    public Client(String fullName, String phoneNumber, String email, String location) {
+        this.fullName = fullName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.location = location;
+    }
+
     public String getFullName() {
         return fullName;
     }

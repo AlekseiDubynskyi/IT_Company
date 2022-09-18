@@ -7,9 +7,21 @@
         <location>London</location>
     </client>
     <client>
-        <fullName>Oliver Adams</fullName>
-        <phoneNumber>+4197017907418</phoneNumber>
+        <fullName>Oliver Adamsh</fullName>
+        <phoneNumber>+507558987358</phoneNumber>
         <email>oliver.adams@gmail.com</email>
         <location>New York</location>
+    </client>
+    <client>
+        <fullName>Shelby Riley</fullName>
+        <phoneNumber>+758535848022</phoneNumber>
+        <email>riley.s@gmail.com</email>
+        <location>Sheltered town</location>
+    </client>
+    <client>
+        <fullName>Jonnie Frank</fullName>
+        <phoneNumber>+55124141423</phoneNumber>
+        <email>jonnie@gmail.com</email>
+        <location>Toronto</location>
     </client>
 </clients>

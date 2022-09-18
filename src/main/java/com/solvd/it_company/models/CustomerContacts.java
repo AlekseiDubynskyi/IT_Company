@@ -1,5 +1,7 @@
 package com.solvd.it_company.models;
 
+import java.util.Objects;
+
 public class CustomerContacts {
     private int id;
     private String responsiblePersonName;
@@ -63,6 +65,19 @@ public class CustomerContacts {
 
     public void setAddressId(int addressId) {
         this.addressId = addressId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CustomerContacts that = (CustomerContacts) o;
+        return id == that.id && addressId == that.addressId && responsiblePersonName.equals(that.responsiblePersonName) && phoneNumber.equals(that.phoneNumber) && email.equals(that.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, responsiblePersonName, phoneNumber, email, addressId);
     }
 
     @Override

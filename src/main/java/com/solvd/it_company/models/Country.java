@@ -1,5 +1,7 @@
 package com.solvd.it_company.models;
 
+import java.util.Objects;
+
 public class Country {
     private int id;
     private String country;
@@ -30,6 +32,19 @@ public class Country {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Country country1 = (Country) o;
+        return id == country1.id && country.equals(country1.country);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, country);
     }
 
     @Override

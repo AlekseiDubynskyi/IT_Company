@@ -1,5 +1,7 @@
 package com.solvd.it_company.models;
 
+import java.util.Objects;
+
 public class Services {
     private int id;
     private String serviceName;
@@ -41,6 +43,19 @@ public class Services {
 
     public void setLeadTime(String leadTime) {
         this.leadTime = leadTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Services services = (Services) o;
+        return id == services.id && serviceName.equals(services.serviceName) && leadTime.equals(services.leadTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, serviceName, leadTime);
     }
 
     @Override

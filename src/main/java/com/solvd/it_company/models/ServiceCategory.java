@@ -1,5 +1,7 @@
 package com.solvd.it_company.models;
 
+import java.util.Objects;
+
 public class ServiceCategory {
     private int id;
     private int serviceId;
@@ -41,6 +43,19 @@ public class ServiceCategory {
 
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ServiceCategory that = (ServiceCategory) o;
+        return id == that.id && serviceId == that.serviceId && categoryId == that.categoryId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, serviceId, categoryId);
     }
 
     @Override

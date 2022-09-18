@@ -18,21 +18,12 @@ public class JAXBExecutor {
     private static final Logger LOGGER = LogManager.getLogger(JAXBExecutor.class);
 
     public static void main(String[] args) {
-        Client client1 = new Client();
-        client1.setFullName("John Smith");
-        client1.setPhoneNumber("+49041041794");
-        client1.setEmail("john.smith@gmail.com");
-        client1.setLocation("London");
-
-        Client client2 = new Client();
-        client2.setFullName("Oliver Adams");
-        client2.setPhoneNumber("+4197017907418");
-        client2.setEmail("oliver.adams@gmail.com");
-        client2.setLocation("New York");
-
         List<Client> clients = new ArrayList<Client>();
-        clients.add(client1);
-        clients.add(client2);
+
+        clients.add(new Client("John Smith", "+49041041794", "john.smith@gmail.com", "London"));
+        clients.add(new Client("Oliver Adamsh", "+507558987358", "oliver.adams@gmail.com", "New York"));
+        clients.add(new Client("Shelby Riley", "+758535848022", "riley.s@gmail.com", "Sheltered town"));
+        clients.add(new Client("Jonnie Frank", "+55124141423", "jonnie@gmail.com", "Toronto"));
 
         try {
             marshal(clients, new File("src/main/java/com/solvd/it_company/jaxbTask/clients.xml"));

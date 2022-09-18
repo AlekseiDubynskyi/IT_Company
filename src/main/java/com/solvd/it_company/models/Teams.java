@@ -1,5 +1,7 @@
 package com.solvd.it_company.models;
 
+import java.util.Objects;
+
 public class Teams {
     private int id;
     private String teamName;
@@ -30,6 +32,19 @@ public class Teams {
 
     public void setTeamName(String teamName) {
         this.teamName = teamName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Teams teams = (Teams) o;
+        return id == teams.id && teamName.equals(teams.teamName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, teamName);
     }
 
     @Override
