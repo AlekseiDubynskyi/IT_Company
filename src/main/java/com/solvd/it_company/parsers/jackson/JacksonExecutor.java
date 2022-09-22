@@ -11,7 +11,6 @@ public class JacksonExecutor {
     private static final Logger LOGGER = LogManager.getLogger(JacksonExecutor.class);
 
     public static void main(String[] args) throws IOException {
-
         writeJackson();
         readJackson();
     }
