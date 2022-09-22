@@ -1,4 +1,4 @@
-package com.solvd.it_company.parsers.jackson;
+package com.solvd.it_company.parsers.jacksonTask;
 
 public class Company {
     private String name;
