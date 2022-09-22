@@ -1,4 +1,4 @@
-package com.solvd.it_company.saxTask;
+package com.solvd.it_company.parsers.saxTask;
 
 public class AddressesSAX {
     private int id;

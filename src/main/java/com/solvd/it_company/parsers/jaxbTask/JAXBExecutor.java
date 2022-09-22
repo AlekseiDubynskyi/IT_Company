@@ -1,4 +1,4 @@
-package com.solvd.it_company.jaxbTask;
+package com.solvd.it_company.parsers.jaxbTask;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,13 +26,13 @@ public class JAXBExecutor {
         clients.add(new Client("Jonnie Frank", "+55124141423", "jonnie@gmail.com", "Toronto"));
 
         try {
-            marshal(clients, new File("src/main/java/com/solvd/it_company/jaxbTask/clients.xml"));
+            marshal(clients, new File("src/main/java/com/solvd/it_company/parsers/jaxbTask/clients.xml"));
         } catch (IOException | JAXBException e) {
             e.printStackTrace();
         }
 
         try {
-            clients = unmarshal(new File("src/main/java/com/solvd/it_company/jaxbTask/clients.xml"));
+            clients = unmarshal(new File("src/main/java/com/solvd/it_company/parsers/jaxbTask/clients.xml"));
             clients.forEach(LOGGER::info);
         } catch (JAXBException e) {
             e.printStackTrace();

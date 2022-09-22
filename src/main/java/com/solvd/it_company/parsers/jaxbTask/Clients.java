@@ -1,4 +1,4 @@
-package com.solvd.it_company.jaxbTask;
+package com.solvd.it_company.parsers.jaxbTask;
 
 import java.util.ArrayList;
 import java.util.List;

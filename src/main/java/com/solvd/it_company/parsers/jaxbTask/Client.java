@@ -1,4 +1,4 @@
-package com.solvd.it_company.jaxbTask;
+package com.solvd.it_company.parsers.jaxbTask;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

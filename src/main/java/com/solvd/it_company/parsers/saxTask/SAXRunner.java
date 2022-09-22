@@ -1,4 +1,4 @@
-package com.solvd.it_company.saxTask;
+package com.solvd.it_company.parsers.saxTask;
 
 import org.apache.logging.log4j.LogManager;
 import org.xml.sax.SAXException;
@@ -31,7 +31,7 @@ public class SAXRunner {
 
     public List<AddressesSAX> parseAddresses() {
         var handler = new AddressHandler();
-        String fileName = "src/main/java/com/solvd/it_company/saxTask/Addresses.xml";
+        String fileName = "src/main/java/com/solvd/it_company/parsers/saxTask/Addresses.xml";
         File xmlDocument = Paths.get(fileName).toFile();
 
         try {
