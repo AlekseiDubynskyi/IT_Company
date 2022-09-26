@@ -39,9 +39,9 @@ public class OrdersDAO implements IOrdersDAO {
         Orders newOrder = new Orders();
         newOrder.setId(resultSet.getInt("id"));
         newOrder.setPrice(resultSet.getDouble("price"));
-        newOrder.setDateCreation(resultSet.getDate("date_creation"));
+        newOrder.setDateCreation(resultSet.getTimestamp("date_creation"));
         newOrder.setPaymentType(resultSet.getString("payment_type"));
-        newOrder.setDatePayment(resultSet.getDate("date_payment"));
+        newOrder.setDatePayment(resultSet.getTimestamp("date_payment"));
         newOrder.setCustomerId(resultSet.getInt("customer_id"));
         newOrder.setTeamId(resultSet.getInt("team_id"));
         newOrder.setDiscountId(resultSet.getInt("discount_id"));
@@ -76,11 +76,11 @@ public class OrdersDAO implements IOrdersDAO {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO Orders VALUE(default, ?, ?, ?, ?, ?, ?, ?, ?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO Orders VALUES(default, ?, ?, ?, ?, ?, ?, ?, ?)");
             preparedStatement.setDouble(1, orders.getPrice());
-            preparedStatement.setDate(2, (java.sql.Date) orders.getDateCreation());
+            preparedStatement.setTimestamp(2, (Timestamp) orders.getDateCreation());
             preparedStatement.setString(3, orders.getPaymentType());
-            preparedStatement.setDate(4, (java.sql.Date) orders.getDatePayment());
+            preparedStatement.setTimestamp(4, (Timestamp) orders.getDatePayment());
             preparedStatement.setInt(5, orders.getCustomerId());
             preparedStatement.setInt(6, orders.getTeamId());
             preparedStatement.setInt(7, orders.getDiscountId());

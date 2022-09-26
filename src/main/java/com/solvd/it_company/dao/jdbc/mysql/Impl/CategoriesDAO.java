@@ -69,7 +69,7 @@ public class CategoriesDAO implements ICategoriesDAO {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO Categories VALUE(default, ?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO Categories VALUES(default, ?)");
             preparedStatement.setString(1, categories.getCategoryName());
             if (preparedStatement.executeUpdate() == 1) {
                 LOGGER.info("Insertion is successful.");

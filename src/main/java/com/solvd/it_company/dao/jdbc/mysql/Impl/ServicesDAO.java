@@ -70,7 +70,7 @@ public class ServicesDAO implements IServicesDAO {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO Services VALUE(default, ?, ?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO Services VALUES(default, ?, ?)");
             preparedStatement.setString(1, services.getServiceName());
             preparedStatement.setString(2, services.getServiceName());
             if (preparedStatement.executeUpdate() == 1) {

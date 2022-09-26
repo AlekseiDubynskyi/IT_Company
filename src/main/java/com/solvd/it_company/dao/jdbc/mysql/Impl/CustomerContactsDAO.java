@@ -72,7 +72,7 @@ public class CustomerContactsDAO implements ICustomerContactsDAO {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO Customer_contacts VALUE(default, ?, ?, ?, ?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO Customer_contacts VALUES(default, ?, ?, ?, ?)");
             preparedStatement.setString(1, customerContacts.getResponsiblePersonName());
             preparedStatement.setString(2, customerContacts.getPhoneNumber());
             preparedStatement.setString(3, customerContacts.getEmail());

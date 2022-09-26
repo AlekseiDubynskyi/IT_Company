@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="src.main.resources.mappers.OrdersMapper">
+    <resultMap id="orders" type="com.solvd.it_company.models.Orders">
+        <id property="id" column="id"/>
+        <result property="price" column="price"/>
+        <result property="dateCreation" column="date_creation"/>
+        <result property="paymentType" column="payment_type"/>
+        <result property="datePayment" column="date_payment"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="teamId" column="team_id"/>
+        <result property="discountId" column="discount_id"/>
+        <result property="serviceCategoryId" column="service_category_id"/>
+    </resultMap>
+    <select id="getAllOrders" resultMap="orders">
+        SELECT * FROM Orders
+
+<!--        SELECT o.id, price, date_creation, payment_type, date_payment, customer_name, team_name, discount_name, service_name, lead_time, category_name FROM Orders AS o-->
+<!--        INNER JOIN Customers AS c ON o.customer_id=c.id-->
+<!--        INNER JOIN Teams AS t ON o.team_id=t.id-->
+<!--        INNER JOIN Discount AS d ON o.discount_id=d.id-->
+<!--        INNER JOIN Service_category AS sc ON o.service_category_id=sc.id-->
+<!--        INNER JOIN Services AS s ON sc.service_id=s.id-->
+<!--        INNER JOIN Categories AS cat ON sc.category_id=cat.id;-->
+    </select>
+</mapper>

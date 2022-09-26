@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="src.main.resources.mappers.AddressesMapper">
+    <resultMap id="addresses" type="com.solvd.it_company.models.Addresses">
+        <id property="id" column="id"/>
+        <result property="address" column="address"/>
+        <result property="district" column="district"/>
+        <result property="postalCode" column="postal_code"/>
+        <result property="cityId" column="city_id"/>
+    </resultMap>
+    <select id="getAddressById" parameterType="int" resultMap="addresses">
+        SELECT * FROM Addresses WHERE id=#{id}
+    </select>
+    <select id="getAllAddresses" resultMap="addresses">
+        SELECT * FROM Addresses
+    </select>
+    <insert id="addAddress">
+        INSERT INTO Addresses(id, address, district, postal_code, city_id) VALUES (#{id}, #{address}, #{district}, #{postalCode}, #{cityId})
+    </insert>
+    <update id="updateAddress">
+        UPDATE Addresses SET address=#{address}, district=#{district}, postal_code=#{postalCode}, city_id=#{cityId} WHERE id=#{id}
+    </update>
+    <delete id="deleteAddress">
+        DELETE FROM Addresses WHERE id=#{id}
+    </delete>
+</mapper>

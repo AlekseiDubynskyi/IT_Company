@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="src.main.resources.mappers.CityMapper">
+    <resultMap id="city" type="com.solvd.it_company.models.City">
+        <id property="id" column="id"/>
+        <result property="city" column="city"/>
+        <result property="countryId" column="country_id"/>
+    </resultMap>
+    <select id="getCityById" parameterType="int" resultMap="city">
+        SELECT * FROM City WHERE id=#{id}
+    </select>
+    <select id="getAllCities" resultMap="city">
+        SELECT * FROM City
+    </select>
+    <insert id="addACity">
+        INSERT INTO City(id, city, country_id) VALUES (#{id}, #{city}, #{countryId})
+    </insert>
+    <update id="updateCity">
+        UPDATE City SET city=#{city}, country_id=#{countryId} WHERE id=#{id}
+    </update>
+    <delete id="deleteCity">
+        DELETE FROM City WHERE id=#{id}
+    </delete>
+</mapper>

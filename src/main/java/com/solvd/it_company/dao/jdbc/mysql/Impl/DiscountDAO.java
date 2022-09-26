@@ -70,7 +70,7 @@ public class DiscountDAO implements IDiscountDAO {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO Discount VALUE(default, ?, ?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO Discount VALUES(default, ?, ?)");
             preparedStatement.setString(1, discount.getDiscountName());
             preparedStatement.setBoolean(2, discount.getDiscountSuccess());
             if (preparedStatement.executeUpdate() == 1) {

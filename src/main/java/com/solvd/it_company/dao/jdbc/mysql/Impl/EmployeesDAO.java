@@ -74,7 +74,7 @@ public class EmployeesDAO implements IEmployeesDAO {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO Employees VALUE(default, ?, ?, ?, ?, ?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO Employees VALUES(default, ?, ?, ?, ?, ?)");
             preparedStatement.setString(1, employees.getFirstName());
             preparedStatement.setString(2, employees.getLastName());
             preparedStatement.setInt(3, employees.getPositionId());

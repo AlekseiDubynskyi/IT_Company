@@ -70,7 +70,7 @@ public class CityDAO implements ICityDAO {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO City VALUE(default, ?, ?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO City VALUES(default, ?, ?)");
             preparedStatement.setString(1, city.getCity());
             preparedStatement.setInt(2, city.getCountryId());
             if (preparedStatement.executeUpdate() == 1) {

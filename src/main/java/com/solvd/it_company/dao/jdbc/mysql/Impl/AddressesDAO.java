@@ -72,7 +72,7 @@ public class AddressesDAO implements IAddressesDAO {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO Addresses VALUE(default, ?, ?, ?, ?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO Addresses VALUES(default, ?, ?, ?, ?)");
             preparedStatement.setString(1, addresses.getAddress());
             preparedStatement.setString(2, addresses.getDistrict());
             preparedStatement.setString(3, addresses.getPostalCode());

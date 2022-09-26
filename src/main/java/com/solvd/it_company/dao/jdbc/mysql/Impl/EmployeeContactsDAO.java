@@ -71,7 +71,7 @@ public class EmployeeContactsDAO implements IEmployeeContactsDAO {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO Employee_contacts VALUE(default, ?, ?, ?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO Employee_contacts VALUES(default, ?, ?, ?)");
             preparedStatement.setString(1, employeeContacts.getPhoneNumber());
             preparedStatement.setString(2, employeeContacts.getEmail());
             preparedStatement.setInt(3, employeeContacts.getAddressId());

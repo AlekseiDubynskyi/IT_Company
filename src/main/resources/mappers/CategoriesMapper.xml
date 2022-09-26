@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="src.main.resources.mappers.CategoriesMapper">
+    <resultMap id="categories" type="com.solvd.it_company.models.Categories">
+        <id property="id" column="id"/>
+        <result property="categoryName" column="category_name"/>
+    </resultMap>
+    <select id="getCategoryById" parameterType="int" resultMap="categories">
+        SELECT * FROM Categories WHERE id=#{id}
+    </select>
+    <select id="getAllCategories" resultMap="categories">
+        SELECT * FROM Categories
+    </select>
+    <insert id="addCategory">
+        INSERT INTO Categories(id, category_name) VALUES (#{id}, #{categoryName})
+    </insert>
+    <update id="updateCategory">
+        UPDATE Categories SET category_name=#{categoryName} WHERE id=#{id}
+    </update>
+    <delete id="deleteCategory">
+        DELETE FROM Categories WHERE id=#{id}
+    </delete>
+</mapper>

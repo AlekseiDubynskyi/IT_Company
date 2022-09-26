@@ -69,7 +69,7 @@ public class CustomerTypesDAO implements ICustomerTypesDAO {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO Customer_types VALUE(default, ?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO Customer_types VALUES(default, ?)");
             preparedStatement.setString(1, customerTypes.getCustomerType());
             if (preparedStatement.executeUpdate() == 1) {
                 LOGGER.info("Insertion is successful.");

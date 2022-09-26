@@ -70,7 +70,7 @@ public class CountryDAO implements ICountryDAO {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO Country VALUE(default, ?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO Country VALUES(default, ?)");
             preparedStatement.setString(1, country.getCountry());
             if (preparedStatement.executeUpdate() == 1) {
                 LOGGER.info("Insertion is successful.");

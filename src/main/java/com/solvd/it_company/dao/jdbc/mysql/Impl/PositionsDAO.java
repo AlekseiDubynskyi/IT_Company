@@ -69,7 +69,7 @@ public class PositionsDAO implements IPositionsDAO {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO Positions VALUE(default, ?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO Positions VALUES(default, ?)");
             preparedStatement.setString(1, positions.getPosition());
             if (preparedStatement.executeUpdate() == 1) {
                 LOGGER.info("Insertion is successful.");

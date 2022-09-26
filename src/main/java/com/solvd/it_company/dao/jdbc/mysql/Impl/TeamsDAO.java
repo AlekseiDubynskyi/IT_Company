@@ -69,7 +69,7 @@ public class TeamsDAO implements ITeamsDAO {
         PreparedStatement preparedStatement = null;
         Connection connection = ConnectionUtil.getConnection();
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO Teams VALUE(default, ?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO Teams VALUES(default, ?)");
             preparedStatement.setString(1, teams.getTeamName());
             if (preparedStatement.executeUpdate() == 1) {
                 LOGGER.info("Insertion is successful.");
