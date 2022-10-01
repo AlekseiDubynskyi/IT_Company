@@ -16,7 +16,7 @@ public class OrdersMapperDAO {
     public List<Orders> getAllOrders() {
         List<Orders> orders = new LinkedList<>();
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        orders = session.selectList("src.main.resources.mappers.OrdersMapper.getAllOrders", orders);
+        orders = session.selectList("src.main.resources.myBatis.mappers.OrdersMapper.getAllOrders", orders);
         session.close();
         orders.forEach(LOGGER::info);
         return orders;

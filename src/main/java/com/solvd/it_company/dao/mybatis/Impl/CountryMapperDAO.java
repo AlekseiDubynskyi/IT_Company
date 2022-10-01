@@ -16,7 +16,7 @@ public class CountryMapperDAO implements ICountryDAO {
     @Override
     public Country getCountryById(int id) {
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        Country country = session.selectOne("src.main.resources.mappers.CountryMapper.getCountryById", id);
+        Country country = session.selectOne("src.main.resources.myBatis.mappers.CountryMapper.getCountryById", id);
         session.close();
         return country;
     }
@@ -25,7 +25,7 @@ public class CountryMapperDAO implements ICountryDAO {
     public List<Country> getAllCountries() {
         List<Country> countries = new LinkedList<>();
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        countries = session.selectList("src.main.resources.mappers.CountryMapper.getAllCountries", countries);
+        countries = session.selectList("src.main.resources.myBatis.mappers.CountryMapper.getAllCountries", countries);
         session.close();
         countries.forEach(LOGGER::info);
         return countries;
@@ -34,7 +34,7 @@ public class CountryMapperDAO implements ICountryDAO {
     @Override
     public void addCountry(Country country) {
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        session.insert("src.main.resources.mappers.CountryMapper.addCountry", country);
+        session.insert("src.main.resources.myBatis.mappers.CountryMapper.addCountry", country);
         session.commit();
         session.close();
     }
@@ -42,7 +42,7 @@ public class CountryMapperDAO implements ICountryDAO {
     @Override
     public void updateCountry(Country country) {
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        session.update("src.main.resources.mappers.CountryMapper.updateCountry", country);
+        session.update("src.main.resources.myBatis.mappers.CountryMapper.updateCountry", country);
         session.commit();
         session.close();
     }
@@ -50,7 +50,7 @@ public class CountryMapperDAO implements ICountryDAO {
     @Override
     public void deleteCountry(int id) {
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        session.delete("src.main.resources.mappers.CountryMapper.deleteCountry", id);
+        session.delete("src.main.resources.myBatis.mappers.CountryMapper.deleteCountry", id);
         session.commit();
         session.close();
     }

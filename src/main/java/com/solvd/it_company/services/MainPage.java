@@ -34,7 +34,7 @@ public class MainPage {
                 start();
                 break;
             case "0":
-                break;
+                System.exit(0);
             default:
                 LOGGER.info("Please enter only the provided numbers.");
                 start();

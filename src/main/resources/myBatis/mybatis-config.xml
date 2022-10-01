@@ -18,11 +18,11 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="mappers/AddressesMapper.xml"/>
-        <mapper resource="mappers/CategoriesMapper.xml"/>
-        <mapper resource="mappers/CityMapper.xml"/>
-        <mapper resource="mappers/CountryMapper.xml"/>
-        <mapper resource="mappers/CustomerContactsMapper.xml"/>
-        <mapper resource="mappers/OrdersMapper.xml"/>
+        <mapper resource="myBatis/mappers/AddressesMapper.xml"/>
+        <mapper resource="myBatis/mappers/CategoriesMapper.xml"/>
+        <mapper resource="myBatis/mappers/CityMapper.xml"/>
+        <mapper resource="myBatis/mappers/CountryMapper.xml"/>
+        <mapper resource="myBatis/mappers/CustomerContactsMapper.xml"/>
+        <mapper resource="myBatis/mappers/OrdersMapper.xml"/>
     </mappers>
 </configuration>

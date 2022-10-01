@@ -16,7 +16,7 @@ public class CustomerContactsMapperDAO implements ICustomerContactsDAO {
     @Override
     public CustomerContacts getCustomerContactById(int id) {
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        CustomerContacts customerContacts = session.selectOne("src.main.resources.mappers.CustomerContactsMapper.getCustomerContactById", id);
+        CustomerContacts customerContacts = session.selectOne("src.main.resources.myBatis.mappers.CustomerContactsMapper.getCustomerContactById", id);
         session.close();
         return customerContacts;
     }
@@ -25,7 +25,7 @@ public class CustomerContactsMapperDAO implements ICustomerContactsDAO {
     public List<CustomerContacts> getAllCustomerContacts() {
         List<CustomerContacts> customerContacts = new LinkedList<>();
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        customerContacts = session.selectList("src.main.resources.mappers.CustomerContactsMapper.getAllCustomerContacts", customerContacts);
+        customerContacts = session.selectList("src.main.resources.myBatis.mappers.CustomerContactsMapper.getAllCustomerContacts", customerContacts);
         session.close();
         customerContacts.forEach(LOGGER::info);
         return customerContacts;
@@ -34,7 +34,7 @@ public class CustomerContactsMapperDAO implements ICustomerContactsDAO {
     @Override
     public void addCustomerContact(CustomerContacts customerContacts) {
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        session.insert("src.main.resources.mappers.CustomerContactsMapper.addCustomerContact", customerContacts);
+        session.insert("src.main.resources.myBatis.mappers.CustomerContactsMapper.addCustomerContact", customerContacts);
         session.commit();
         session.close();
     }
@@ -42,7 +42,7 @@ public class CustomerContactsMapperDAO implements ICustomerContactsDAO {
     @Override
     public void updateCustomerContact(CustomerContacts customerContacts) {
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        session.update("src.main.resources.mappers.CustomerContactsMapper.updateCustomerContact", customerContacts);
+        session.update("src.main.resources.myBatis.mappers.CustomerContactsMapper.updateCustomerContact", customerContacts);
         session.commit();
         session.close();
     }
@@ -50,7 +50,7 @@ public class CustomerContactsMapperDAO implements ICustomerContactsDAO {
     @Override
     public void deleteCustomerContact(int id) {
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        session.delete("src.main.resources.mappers.CustomerContactsMapper.deleteCustomerContact", id);
+        session.delete("src.main.resources.myBatis.mappers.CustomerContactsMapper.deleteCustomerContact", id);
         session.commit();
         session.close();
     }

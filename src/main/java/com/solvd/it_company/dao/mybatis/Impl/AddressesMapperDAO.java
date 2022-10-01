@@ -16,7 +16,7 @@ public class AddressesMapperDAO implements IAddressesDAO {
     @Override
     public Addresses getAddressById(int id) {
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        Addresses addresses = session.selectOne("src.main.resources.mappers.AddressesMapper.getAddressById", id);
+        Addresses addresses = session.selectOne("src.main.resources.myBatis.mappers.AddressesMapper.getAddressById", id);
         session.close();
         return addresses;
     }
@@ -25,7 +25,7 @@ public class AddressesMapperDAO implements IAddressesDAO {
     public List<Addresses> getAllAddresses() {
         List<Addresses> addresses = new LinkedList<>();
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        addresses = session.selectList("src.main.resources.mappers.AddressesMapper.getAllAddresses", addresses);
+        addresses = session.selectList("src.main.resources.myBatis.mappers.AddressesMapper.getAllAddresses", addresses);
         session.close();
         addresses.forEach(LOGGER::info);
         return addresses;
@@ -34,7 +34,7 @@ public class AddressesMapperDAO implements IAddressesDAO {
     @Override
     public void addAddress(Addresses addresses) {
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        session.insert("src.main.resources.mappers.AddressesMapper.addAddress", addresses);
+        session.insert("src.main.resources.myBatis.mappers.AddressesMapper.addAddress", addresses);
         session.commit();
         session.close();
     }
@@ -42,7 +42,7 @@ public class AddressesMapperDAO implements IAddressesDAO {
     @Override
     public void updateAddress(Addresses addresses) {
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        session.update("src.main.resources.mappers.AddressesMapper.updateAddress", addresses);
+        session.update("src.main.resources.myBatis.mappers.AddressesMapper.updateAddress", addresses);
         session.commit();
         session.close();
     }
@@ -50,7 +50,7 @@ public class AddressesMapperDAO implements IAddressesDAO {
     @Override
     public void deleteAddress(int id) {
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        session.delete("src.main.resources.mappers.AddressesMapper.deleteAddress", id);
+        session.delete("src.main.resources.myBatis.mappers.AddressesMapper.deleteAddress", id);
         session.commit();
         session.close();
     }

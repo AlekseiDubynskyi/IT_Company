@@ -16,7 +16,7 @@ public class CityMapperDAO implements ICityDAO {
     @Override
     public City getCityById(int id) {
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        City city = session.selectOne("src.main.resources.mappers.CityMapper.getCityById", id);
+        City city = session.selectOne("src.main.resources.myBatis.mappers.CityMapper.getCityById", id);
         session.close();
         return city;
     }
@@ -25,7 +25,7 @@ public class CityMapperDAO implements ICityDAO {
     public List<City> getAllCities() {
         List<City> cities = new LinkedList<>();
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        cities = session.selectList("src.main.resources.mappers.CityMapper.getAllCities", cities);
+        cities = session.selectList("src.main.resources.myBatis.mappers.CityMapper.getAllCities", cities);
         session.close();
         cities.forEach(LOGGER::info);
         return cities;
@@ -34,7 +34,7 @@ public class CityMapperDAO implements ICityDAO {
     @Override
     public void addCity(City city) {
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        session.insert("src.main.resources.mappers.CityMapper.addCity", city);
+        session.insert("src.main.resources.myBatis.mappers.CityMapper.addCity", city);
         session.commit();
         session.close();
     }
@@ -42,7 +42,7 @@ public class CityMapperDAO implements ICityDAO {
     @Override
     public void updateCity(City city) {
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        session.update("src.main.resources.mappers.CityMapper.updateCity", city);
+        session.update("src.main.resources.myBatis.mappers.CityMapper.updateCity", city);
         session.commit();
         session.close();
     }
@@ -50,7 +50,7 @@ public class CityMapperDAO implements ICityDAO {
     @Override
     public void deleteCity(int id) {
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        session.delete("src.main.resources.mappers.CityMapper.deleteCity", id);
+        session.delete("src.main.resources.myBatis.mappers.CityMapper.deleteCity", id);
         session.commit();
         session.close();
     }

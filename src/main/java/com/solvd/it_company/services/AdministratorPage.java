@@ -1,16 +1,11 @@
 package com.solvd.it_company.services;
 
-import com.solvd.it_company.connection.ConnectionUtil;
 import com.solvd.it_company.dao.jdbc.mysql.Impl.CustomersDAO;
 import com.solvd.it_company.dao.jdbc.mysql.Impl.EmployeesDAO;
-import com.solvd.it_company.dao.jdbc.mysql.Impl.OrdersDAO;
 import com.solvd.it_company.dao.mybatis.Impl.OrdersMapperDAO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.*;
 
 public class AdministratorPage {

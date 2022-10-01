@@ -16,7 +16,7 @@ public class CategoriesMapperDAO implements ICategoriesDAO {
     @Override
     public Categories getCategoryById(int id) {
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        Categories categories = session.selectOne("src.main.resources.mappers.CategoriesMapper.getCategoryById", id);
+        Categories categories = session.selectOne("src.main.resources.myBatis.mappers.CategoriesMapper.getCategoryById", id);
         session.close();
         return categories;
     }
@@ -25,7 +25,7 @@ public class CategoriesMapperDAO implements ICategoriesDAO {
     public List<Categories> getAllCategories() {
         List<Categories> categories = new LinkedList<>();
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        categories = session.selectList("src.main.resources.mappers.CategoriesMapper.getAllCategories", categories);
+        categories = session.selectList("src.main.resources.myBatis.mappers.CategoriesMapper.getAllCategories", categories);
         session.close();
         categories.forEach(LOGGER::info);
         return categories;
@@ -34,7 +34,7 @@ public class CategoriesMapperDAO implements ICategoriesDAO {
     @Override
     public void addCategory(Categories categories) {
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        session.insert("src.main.resources.mappers.CategoriesMapper.addCategory", categories);
+        session.insert("src.main.resources.myBatis.mappers.CategoriesMapper.addCategory", categories);
         session.commit();
         session.close();
     }
@@ -42,7 +42,7 @@ public class CategoriesMapperDAO implements ICategoriesDAO {
     @Override
     public void updateCategory(Categories categories) {
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        session.update("src.main.resources.mappers.CategoriesMapper.updateCategory", categories);
+        session.update("src.main.resources.myBatis.mappers.CategoriesMapper.updateCategory", categories);
         session.commit();
         session.close();
     }
@@ -50,7 +50,7 @@ public class CategoriesMapperDAO implements ICategoriesDAO {
     @Override
     public void deleteCategory(int id) {
         SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        session.delete("src.main.resources.mappers.CategoriesMapper.deleteCategory", id);
+        session.delete("src.main.resources.myBatis.mappers.CategoriesMapper.deleteCategory", id);
         session.commit();
         session.close();
     }
